@@ -4,15 +4,15 @@ import { MetricData } from "@/types/statsCardDataTypes";
 // Dummy data for StatsCard
 export const defaultMetrics: MetricData[] = [
   {
-    title: "Total customers",
-    value: "2,420",
+    title: "Total earning",
+    value: "$2,420",
     trend: "up",
     trendValue: "40",
     trendColor: "text-green-600",
     sparklinePoints: [15, 18, 16, 22, 25, 23, 28, 32, 30, 35, 38, 42],
   },
   {
-    title: "Members",
+    title: "Total order",
     value: "1,210",
     trend: "down",
     trendValue: "10",
@@ -20,7 +20,7 @@ export const defaultMetrics: MetricData[] = [
     sparklinePoints: [35, 32, 34, 30, 28, 25, 23, 20, 18, 22, 19, 16],
   },
   {
-    title: "Subscribed User",
+    title: "Total User",
     value: "316",
     trend: "up",
     trendValue: "20",

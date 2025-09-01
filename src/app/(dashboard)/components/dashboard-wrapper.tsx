@@ -1,7 +1,7 @@
 // src/app/(dashboard)/components/dashboard-wrapper.tsx
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -53,8 +53,52 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
   const minWidth = 72;
   const maxWidth = 400;
 
+  // Memoize links array to prevent unnecessary re-renders
+  const links: LinkType[] = useMemo(
+    () => [
+      {
+        label: "Home",
+        href: "/overview",
+        iconSrc: "https://cdn.lordicon.com/jeuxydnh.json",
+      },
+      {
+        label: "Users",
+        href: "/manage-users",
+        iconSrc: "https://cdn.lordicon.com/fqbvgezn.json",
+        subLinks: [{ label: "User details", href: "/manage-users/details" }],
+      },
+      {
+        label: "Orders",
+        href: "/orders",
+        iconSrc: "https://cdn.lordicon.com/uisoczqi.json",
+        subLinks: [{ label: "Order details", href: "/orders/details" }],
+      },
+      {
+        label: "Payment",
+        href: "/payment",
+        iconSrc: "https://cdn.lordicon.com/ytklkgsc.json",
+      },
+      {
+        label: "Subscribe",
+        href: "/subscribe",
+        iconSrc: "https://cdn.lordicon.com/lyjuidpq.json",
+      },
+      {
+        label: "Upload",
+        href: "/upload",
+        iconSrc: CloudUpload,
+      },
+      {
+        label: "Settings",
+        href: "/settings",
+        iconSrc: "https://cdn.lordicon.com/asyunleq.json",
+      },
+    ],
+    []
+  );
+
   // Define color schemes
-  const getIconColors = (isActive: boolean, isDark: boolean) => {
+  const getIconColors = useCallback((isActive: boolean, isDark: boolean) => {
     if (isActive) {
       return {
         primary: isDark ? "#FFFF00" : "#4693D9",
@@ -65,52 +109,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
       primary: isDark ? "#FFFF00" : "#4693D9",
       secondary: isDark ? "#FFFF00" : "#4693D9",
     };
-  };
-
-  const links: LinkType[] = [
-    {
-      label: "Home",
-      href: "/overview",
-      iconSrc: "https://cdn.lordicon.com/jeuxydnh.json",
-    },
-    {
-      label: "Users",
-      href: "/manage-users",
-      iconSrc: "https://cdn.lordicon.com/fqbvgezn.json",
-      subLinks: [{ label: "User details", href: "/manage-users/details" }],
-    },
-    {
-      label: "Orders",
-      href: "/orders",
-      iconSrc: "https://cdn.lordicon.com/uisoczqi.json",
-      subLinks: [{ label: "Order details", href: "/orders/details" }],
-    },
-    {
-      label: "Payment",
-      href: "/payment",
-      iconSrc: "https://cdn.lordicon.com/ytklkgsc.json",
-    },
-    {
-      label: "Subscribe",
-      href: "/subscribe",
-      iconSrc: "https://cdn.lordicon.com/lyjuidpq.json",
-    },
-    {
-      label: "Upload",
-      href: "/upload",
-      iconSrc: CloudUpload,
-    },
-    {
-      label: "Manage Ads",
-      href: "/manage-ads",
-      iconSrc: "https://cdn.lordicon.com/xovdoewm.json",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-      iconSrc: "https://cdn.lordicon.com/asyunleq.json",
-    },
-  ];
+  }, []);
 
   // Filter links based on search query
   const filteredLinks = useMemo(() => {
@@ -132,22 +131,25 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
   }, [searchQuery, links]);
 
   // Check if current path matches link or its sublinks
-  const isLinkActive = (link: LinkType) => {
-    if (pathname === link.href) return true;
-    if (link.subLinks) {
-      return link.subLinks.some((subLink) => pathname === subLink.href);
-    }
-    return false;
-  };
+  const isLinkActive = useCallback(
+    (link: LinkType) => {
+      if (pathname === link.href) return true;
+      if (link.subLinks) {
+        return link.subLinks.some((subLink) => pathname === subLink.href);
+      }
+      return false;
+    },
+    [pathname]
+  );
 
   // Toggle expanded state for items with sublinks
-  const toggleExpanded = (label: string) => {
+  const toggleExpanded = useCallback((label: string) => {
     setExpandedItems((prev) =>
       prev.includes(label)
         ? prev.filter((item) => item !== label)
         : [...prev, label]
     );
-  };
+  }, []);
 
   // Auto-expand items if their sublink is active
   useEffect(() => {
@@ -161,7 +163,25 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         }
       }
     });
-  }, [pathname]);
+  }, [pathname, links, expandedItems]);
+
+  // Auto-expand items when search matches sublinks
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const itemsToExpand: string[] = [];
+      links.forEach((link) => {
+        if (link.subLinks) {
+          const hasMatchingSubLink = link.subLinks.some((subLink) =>
+            subLink.label.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+          if (hasMatchingSubLink) {
+            itemsToExpand.push(link.label);
+          }
+        }
+      });
+      setExpandedItems((prev) => [...new Set([...prev, ...itemsToExpand])]);
+    }
+  }, [searchQuery, links]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsResizing(true);
@@ -226,41 +246,44 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
   };
 
   // Render icon based on type
-  const renderIcon = (
-    iconSrc: string | React.ComponentType<any>,
-    isActive: boolean,
-    isDark: boolean
-  ) => {
-    if (typeof iconSrc === "string") {
-      // Lordicon
-      return (
-        <Lordicon
-          src={iconSrc}
-          trigger="hover"
-          stroke={3}
-          colors={getIconColors(isActive, isDark)}
-          size={24}
-        />
-      );
-    } else {
-      // Lucide icon
-      const IconComponent = iconSrc;
-      return (
-        <IconComponent
-          className={cn(
-            "h-6 w-6 flex-shrink-0",
-            isActive
-              ? isDark
+  const renderIcon = useCallback(
+    (
+      iconSrc: string | React.ComponentType<any>,
+      isActive: boolean,
+      isDark: boolean
+    ) => {
+      if (typeof iconSrc === "string") {
+        // Lordicon
+        return (
+          <Lordicon
+            src={iconSrc}
+            trigger="hover"
+            stroke={3}
+            colors={getIconColors(isActive, isDark)}
+            size={24}
+          />
+        );
+      } else {
+        // Lucide icon
+        const IconComponent = iconSrc;
+        return (
+          <IconComponent
+            className={cn(
+              "h-6 w-6 flex-shrink-0",
+              isActive
+                ? isDark
+                  ? "text-yellow-400"
+                  : "text-blue-500"
+                : isDark
                 ? "text-yellow-400"
                 : "text-blue-500"
-              : isDark
-              ? "text-yellow-400"
-              : "text-blue-500"
-          )}
-        />
-      );
-    }
-  };
+            )}
+          />
+        );
+      }
+    },
+    [getIconColors]
+  );
 
   return (
     <div
@@ -303,7 +326,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                     placeholder="Search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 text-sm  border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none  focus:border-gray-300"
+                    className="w-full pl-10 pr-4 py-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:border-gray-300"
                   />
                 </div>
               </motion.div>
@@ -330,31 +353,45 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
 
                   const shouldShowSublinks =
                     hasSubLinks &&
-                    (isExpanded || isHovered) &&
+                    (isExpanded || (isHovered && !searchQuery.trim())) &&
                     open &&
                     filteredSubLinks &&
                     filteredSubLinks.length > 0;
 
                   return (
-                    <div key={idx}>
-                      {/* Main Link */}
-                      <div
-                        className="flex items-center relative"
-                        onMouseEnter={() =>
-                          hasSubLinks && setHoveredItem(link.label)
+                    <div
+                      key={idx}
+                      className="relative"
+                      onMouseEnter={() => {
+                        if (hasSubLinks) {
+                          setHoveredItem(link.label);
                         }
-                        onMouseLeave={() => setHoveredItem(null)}
-                      >
+                      }}
+                      onMouseLeave={() => {
+                        if (hasSubLinks) {
+                          // Only clear hover if not expanded (clicked)
+                          if (!isExpanded) {
+                            setTimeout(() => {
+                              setHoveredItem((prev) =>
+                                prev === link.label ? null : prev
+                              );
+                            }, 200);
+                          }
+                        }
+                      }}
+                    >
+                      {/* Main Link */}
+                      <div className="flex items-center relative">
                         <Link
                           href={link.href}
                           className={cn(
-                            "flex items-center gap-3 px-2 py-2 rounded-md transition-all duration-200 group flex-1 relative",
+                            "flex items-center gap-3 px-2 py-1 rounded-md transition-all duration-200 group flex-1 relative ",
                             isActive
-                              ? "flex items-center bg-[#EAF3FF] dark:bg-primary text-foreground font-semibold shadow-md"
-                              : "flex items-center text-black/80 hover:text-black hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
+                              ? "bg-[#EAF3FF] dark:bg-primary text-foreground font-semibold shadow-md"
+                              : "text-black/80 hover:text-black hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
                           )}
                         >
-                          <span className="flex-shrink-0">
+                          <span className="flex-shrink-0 mt-1.5">
                             {renderIcon(link.iconSrc, isActive, isDark)}
                           </span>
                           <motion.span
@@ -366,33 +403,33 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                           >
                             {link.label}
                           </motion.span>
-                        </Link>
 
-                        {/* Expand/Collapse Button for items with sublinks */}
-                        {hasSubLinks && open && (
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              toggleExpanded(link.label);
-                            }}
-                            className={cn(
-                              "p-1 rounded transition-all duration-200 ml-1",
-                              isActive
-                                ? "text-foreground"
-                                : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
-                            )}
-                          >
-                            {isExpanded ? (
-                              <ChevronUp className="h-4 w-4" />
-                            ) : (
-                              <ChevronDown className="h-4 w-4" />
-                            )}
-                          </button>
-                        )}
+                          {/* Expand/Collapse Button for items with sublinks - Now inside the main link */}
+                          {hasSubLinks && open && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                toggleExpanded(link.label);
+                              }}
+                              className={cn(
+                                "p-1 rounded transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/10",
+                                isActive
+                                  ? "text-foreground"
+                                  : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                              )}
+                            >
+                              {isExpanded ? (
+                                <ChevronUp className="h-4 w-4" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4" />
+                              )}
+                            </button>
+                          )}
+                        </Link>
                       </div>
 
-                      {/* Sub Links */}
+                      {/* Sub Links Container */}
                       {shouldShowSublinks && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
@@ -400,6 +437,19 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                           className="ml-8 mt-1 space-y-1 overflow-hidden"
+                          onMouseEnter={() => {
+                            setHoveredItem(link.label);
+                          }}
+                          onMouseLeave={() => {
+                            // Only clear hover if not expanded (clicked)
+                            if (!isExpanded) {
+                              setTimeout(() => {
+                                setHoveredItem((prev) =>
+                                  prev === link.label ? null : prev
+                                );
+                              }, 200);
+                            }
+                          }}
                         >
                           {filteredSubLinks.map((subLink, subIdx) => (
                             <Link
@@ -512,10 +562,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
 
 const Logo = ({ open }: { open: boolean }) => {
   return (
-    <div
-      // href="/home"
-      className="font-normal flex items-center text-sm relative z-20 w-full justify-center"
-    >
+    <div className="font-normal flex items-center text-sm relative z-20 w-full justify-center">
       <motion.div
         animate={{
           width: open ? "90px" : "40px",
