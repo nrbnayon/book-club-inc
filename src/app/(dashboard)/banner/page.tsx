@@ -2,10 +2,10 @@
 import DashboardHeader from "../components/dashboard-header";
 import ManagementAds from "../components/Advertisements/ManagementAds";
 
-export default function ManageAdsPage() {
+export default function BannerPage() {
   return (
     <div>
-      <DashboardHeader title='Welcome Nayon' />
+      <DashboardHeader title='Upload your new banner' />
       <div className='p-2 md:p-5'>
         <ManagementAds itemsPerPage={4} showAds={1} title='Advertisements' />
       </div>
