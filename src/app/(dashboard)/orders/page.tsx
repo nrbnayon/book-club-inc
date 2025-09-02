@@ -1,4 +1,4 @@
-// src\app\(dashboard)\manage-book-orders\page.tsx
+// src\app\(dashboard)\orders\page.tsx
 import DashboardHeader from "../components/dashboard-header";
 import BooksOrdersManage from "../components/BooksOrders/BooksOrdersManage";
 

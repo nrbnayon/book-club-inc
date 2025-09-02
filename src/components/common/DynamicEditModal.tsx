@@ -729,7 +729,7 @@ export const DynamicEditModal: React.FC<DynamicEditModalProps> = ({
             ) : (
               <div className="flex items-center gap-2">
                 <Save className="w-4 h-4" />
-                Save Changes
+                Update
               </div>
             )}
           </Button>

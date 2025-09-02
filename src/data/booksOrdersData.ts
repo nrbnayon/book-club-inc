@@ -1,5 +1,6 @@
 import type { GenericDataItem } from "../types/dynamicTableTypes";
 
+
 export interface BookOrderDataItem extends GenericDataItem {
   id: string;
   orderId: string;
@@ -19,7 +20,9 @@ export interface BookOrderDataItem extends GenericDataItem {
     | "shipped"
     | "delivered"
     | "cancelled"
-    | "refunded";
+    | "refunded"
+    | "approved" 
+    | "declined"; 
   paymentStatus: "pending" | "paid" | "failed" | "refunded";
   paymentMethod:
     | "credit_card"

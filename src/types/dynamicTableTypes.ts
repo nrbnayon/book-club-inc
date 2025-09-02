@@ -8,6 +8,7 @@ export interface GenericDataItem {
   name?: string;
   avatar?: string;
   subtitle?: string;
+  status?: string;
   [key: string]: DataValue | DataValue[] | File[] | unknown;
 }
 

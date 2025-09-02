@@ -210,7 +210,7 @@ const EditPricingDialog = ({
             Cancel
           </Button>
           <Button type="button" onClick={handleSave}>
-            Save Changes
+            Update
           </Button>
         </DialogFooter>
       </DialogContent>

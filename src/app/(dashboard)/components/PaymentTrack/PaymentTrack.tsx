@@ -60,9 +60,9 @@ interface BookOrderDataItem extends GenericDataItem {
   createdAt: string;
 }
 
-export default function BooksOrdersManage({
+export default function PaymentTrack({
   itemsPerPage = 10,
-  title = "All Book Orders",
+  title = "All Payment History",
   buttonText = "Show all",
   pageUrl = "/orders",
 }: BookOrderManagementProps) {
@@ -152,8 +152,8 @@ export default function BooksOrdersManage({
   // Form Field Configuration for Book Order Edit Modal
   const bookOrderFormFields: FormFieldConfig[] = [
     {
-      key: "orderId",
-      label: "Order ID",
+      key: "bookName",
+      label: "Book Name",
       type: "text",
       required: true,
       section: "details",
@@ -175,14 +175,7 @@ export default function BooksOrdersManage({
       section: "details",
       gridCol: "full",
     },
-    {
-      key: "bookName",
-      label: "Book Name",
-      type: "text",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
+
     {
       key: "author",
       label: "Author",

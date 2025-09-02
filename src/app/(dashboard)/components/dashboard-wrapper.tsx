@@ -71,7 +71,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         label: "Orders",
         href: "/orders",
         iconSrc: "https://cdn.lordicon.com/uisoczqi.json",
-        subLinks: [{ label: "Order details", href: "/orders/details" }],
+        // subLinks: [{ label: "Order details", href: "/orders/details" }],
       },
       {
         label: "Payment",

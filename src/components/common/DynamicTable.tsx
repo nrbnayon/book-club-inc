@@ -61,6 +61,7 @@ import type {
 import { ViewModal } from "./ViewModal";
 import Lordicon from "../lordicon/lordicon-wrapper";
 import { useRouter } from "next/navigation";
+import { PermissionModal } from "./PermissionModal";
 
 interface DynamicTableProps {
   data: GenericDataItem[];
@@ -79,6 +80,17 @@ interface DynamicTableProps {
   buttonText?: string;
   pageUrl?: string;
   isLoading?: boolean;
+
+  onItemApprove?: (item: GenericDataItem, reason?: string) => void;
+  onItemDecline?: (item: GenericDataItem, reason: string) => void;
+  permissionModalConfig?: {
+    title?: string;
+    description?: string;
+    approveText?: string;
+    declineText?: string;
+    requireReason?: boolean;
+    requireReasonForApprove?: boolean;
+  };
 }
 
 export const DynamicTable: React.FC<DynamicTableProps> = ({
@@ -97,6 +109,9 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   buttonText,
   pageUrl,
   isLoading = false,
+  onItemApprove,
+  onItemDecline,
+  permissionModalConfig = {},
 }) => {
   const router = useRouter();
 
@@ -116,6 +131,11 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   const [selectedItem, setSelectedItem] = useState<GenericDataItem | null>(
     null
   );
+  const [permissionModalOpen, setPermissionModalOpen] = useState(false);
+  const [permissionItem, setPermissionItem] = useState<GenericDataItem | null>(
+    null
+  );
+
   const [deleteConfirm, setDeleteConfirm] = useState<{
     open: boolean;
     itemId: string;
@@ -346,6 +366,23 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
     } else {
       setSelectedItems((prev) => prev.filter((id) => id !== itemId));
     }
+  };
+
+  const handlePermissionAction = (item: GenericDataItem) => {
+    setPermissionItem(item);
+    setPermissionModalOpen(true);
+  };
+
+  const handleApprove = (item: GenericDataItem, reason?: string) => {
+    onItemApprove?.(item, reason);
+    setPermissionModalOpen(false);
+    setPermissionItem(null);
+  };
+
+  const handleDecline = (item: GenericDataItem, reason: string) => {
+    onItemDecline?.(item, reason);
+    setPermissionModalOpen(false);
+    setPermissionItem(null);
   };
 
   // Handle edit
@@ -851,7 +888,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                                 size="sm"
                                 onClick={() => handleEdit(item)}
                               >
-                                Edit
+                                
                               </Button>
                             )}
                           {/* Render custom actions */}
@@ -869,6 +906,11 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                                     handleEdit(item);
                                   } else if (action.key === "details") {
                                     handleDetails(item, action.route);
+                                  } else if (
+                                    action.key === "permission" ||
+                                    action.key === "approve-decline"
+                                  ) {
+                                    handlePermissionAction(item);
                                   } else {
                                     action.onClick(item);
                                   }
@@ -1040,6 +1082,24 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
         columns={columns}
         title="Data Details"
         description="Complete information about the selected data"
+      />
+
+      <PermissionModal
+        isOpen={permissionModalOpen}
+        onClose={() => {
+          setPermissionModalOpen(false);
+          setPermissionItem(null);
+        }}
+        item={permissionItem}
+        onApprove={handleApprove}
+        onDecline={handleDecline}
+        title={permissionModalConfig.title}
+        description={permissionModalConfig.description}
+        approveText={permissionModalConfig.approveText}
+        declineText={permissionModalConfig.declineText}
+        requireReason={permissionModalConfig.requireReason}
+        requireReasonForApprove={permissionModalConfig.requireReasonForApprove}
+        isLoading={isLoading}
       />
     </div>
   );
