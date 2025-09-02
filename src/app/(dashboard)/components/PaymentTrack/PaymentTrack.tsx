@@ -5,18 +5,12 @@ import { useState } from "react";
 import type {
   GenericDataItem,
   ColumnConfig,
-  FormFieldConfig,
   FilterConfig,
-  ActionConfig,
   TableConfig,
-  EditModalConfig,
 } from "@/types/dynamicTableTypes";
 import { DynamicTable } from "@/components/common/DynamicTable";
-import Lordicon from "@/components/lordicon/lordicon-wrapper";
 import StatsCard from "@/components/common/StatsCard";
 import { orderMetrics } from "@/data/statsCardDataSets";
-import { useRouter } from "next/navigation";
-import { Check } from "lucide-react";
 
 interface BookOrderManagementProps {
   itemsPerPage?: number;
@@ -63,32 +57,14 @@ interface BookOrderDataItem extends GenericDataItem {
 export default function PaymentTrack({
   itemsPerPage = 10,
   title = "All Payment History",
-  buttonText = "Show all",
-  pageUrl = "/orders",
+  buttonText = "",
+  pageUrl = "",
 }: BookOrderManagementProps) {
   const [bookOrders, setBookOrders] = useState(booksOrdersData);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+
   // Column Configuration for Book Orders Table
   const bookOrderColumns: ColumnConfig[] = [
-    {
-      key: "orderId",
-      label: "Order ID",
-      sortable: true,
-      searchable: true,
-      align: "left",
-      width: "120px",
-    },
-    {
-      key: "customer",
-      label: "Customer",
-      sortable: true,
-      searchable: true,
-      showAvatar: true,
-      avatarKey: "customerAvatar",
-      align: "left",
-      width: "250px",
-    },
     {
       key: "bookName",
       label: "Book",
@@ -100,205 +76,145 @@ export default function PaymentTrack({
       width: "300px",
     },
     {
+      key: "customer",
+      label: "Customer",
+      sortable: true,
+      searchable: true,
+      showAvatar: true,
+      avatarKey: "customerAvatar",
+      align: "left",
+      width: "100px",
+    },
+    {
       key: "orderDate",
       label: "Date",
       type: "date",
       sortable: true,
-      align: "center",
-      width: "120px",
+      align: "left",
+      width: "50px",
     },
     {
       key: "totalAmount",
-      label: "Amount",
+      label: "Price",
       type: "currency",
-      sortable: true,
-      align: "right",
-      width: "100px",
+      sortable: false,
+      align: "left",
+      width: "50px",
     },
     {
-      key: "status",
-      label: "Status",
-      type: "select",
-      sortable: true,
-      filterable: true,
-      width: "120px",
-      align: "center",
-      options: [
-        { value: "pending", label: "Pending", color: "#f59e0b" },
-        { value: "confirmed", label: "Confirmed", color: "#3b82f6" },
-        { value: "shipped", label: "Shipped", color: "#8b5cf6" },
-        { value: "delivered", label: "Delivered", color: "#16a34a" },
-        { value: "cancelled", label: "Cancelled", color: "#ef4444" },
-        { value: "refunded", label: "Refunded", color: "#6b7280" },
-      ],
-    },
-    {
-      key: "paymentStatus",
+      key: "paymentMethod",
       label: "Payment",
       type: "select",
       sortable: true,
       filterable: true,
-      width: "120px",
+      width: "60px",
       align: "center",
       options: [
-        { value: "pending", label: "Pending", color: "#f59e0b" },
-        { value: "paid", label: "Paid", color: "#16a34a" },
-        { value: "failed", label: "Failed", color: "#ef4444" },
-        { value: "refunded", label: "Refunded", color: "#6b7280" },
-      ],
-    },
-  ];
-
-  // Form Field Configuration for Book Order Edit Modal
-  const bookOrderFormFields: FormFieldConfig[] = [
-    {
-      key: "bookName",
-      label: "Book Name",
-      type: "text",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
-    {
-      key: "customer",
-      label: "Customer Name",
-      type: "text",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
-    {
-      key: "customerEmail",
-      label: "Customer Email",
-      type: "email",
-      required: true,
-      section: "details",
-      gridCol: "full",
-    },
-
-    {
-      key: "author",
-      label: "Author",
-      type: "text",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
-    {
-      key: "isbn",
-      label: "ISBN",
-      type: "text",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
-    {
-      key: "quantity",
-      label: "Quantity",
-      type: "number",
-      required: true,
-      section: "details",
-      gridCol: "half",
-    },
-    {
-      key: "price",
-      label: "Unit Price",
-      type: "number",
-      required: true,
-      section: "pricing",
-      gridCol: "half",
-    },
-    {
-      key: "totalAmount",
-      label: "Total Amount",
-      type: "number",
-      required: true,
-      section: "pricing",
-      gridCol: "half",
-    },
-    {
-      key: "shippingAddress",
-      label: "Shipping Address",
-      type: "textarea",
-      required: true,
-      section: "shipping",
-      gridCol: "full",
-    },
-    {
-      key: "trackingNumber",
-      label: "Tracking Number",
-      type: "text",
-      section: "shipping",
-      gridCol: "half",
-    },
-    {
-      key: "status",
-      label: "Order Status",
-      type: "select",
-      required: true,
-      section: "status",
-      gridCol: "half",
-      options: [
-        { value: "pending", label: "Pending" },
-        { value: "confirmed", label: "Confirmed" },
-        { value: "shipped", label: "Shipped" },
-        { value: "delivered", label: "Delivered" },
-        { value: "cancelled", label: "Cancelled" },
-        { value: "refunded", label: "Refunded" },
+        {
+          value: "credit_card",
+          label: "Credit Card",
+          color: "#f59e0b",
+          textColor: "#1f2937",
+          icon: "💳",
+        },
+        {
+          value: "paypal",
+          label: "Paypal",
+          color: "#3b82f6",
+          textColor: "#ffffff",
+          icon: "🅿️",
+        },
+        {
+          value: "stripe",
+          label: "Stripe",
+          color: "#8b5cf6",
+          textColor: "#ffffff",
+          icon: "💜",
+        },
+        {
+          value: "bank_transfer",
+          label: "Bank Transfer",
+          color: "#16a34a",
+          textColor: "#ffffff",
+          icon: "🏦",
+        },
+        {
+          value: "cash_on_delivery",
+          label: "Cash On",
+          color: "#ef4444",
+          textColor: "#ffffff",
+          icon: "💵",
+        },
       ],
     },
     {
       key: "paymentStatus",
       label: "Payment Status",
       type: "select",
-      required: true,
-      section: "status",
-      gridCol: "half",
+      sortable: true,
+      filterable: true,
+      width: "80px",
+      align: "center",
       options: [
-        { value: "pending", label: "Pending" },
-        { value: "paid", label: "Paid" },
-        { value: "failed", label: "Failed" },
-        { value: "refunded", label: "Refunded" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+          icon: "⏳",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#10b981",
+          textColor: "#ffffff",
+          icon: "✅",
+        },
+        {
+          value: "paid",
+          label: "Paid",
+          color: "#16a34a",
+          textColor: "#ffffff",
+          icon: "✅",
+        },
+        {
+          value: "failed",
+          label: "Failed",
+          color: "#ef4444",
+          textColor: "#ffffff",
+          icon: "❌",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#6b7280",
+          textColor: "#ffffff",
+          icon: "↩️",
+        },
       ],
-    },
-    {
-      key: "paymentMethod",
-      label: "Payment Method",
-      type: "select",
-      required: true,
-      section: "status",
-      gridCol: "full",
-      options: [
-        { value: "credit_card", label: "Credit Card" },
-        { value: "paypal", label: "PayPal" },
-        { value: "stripe", label: "Stripe" },
-        { value: "bank_transfer", label: "Bank Transfer" },
-        { value: "cash_on_delivery", label: "Cash on Delivery" },
-      ],
-    },
-    {
-      key: "notes",
-      label: "Order Notes",
-      type: "textarea",
-      section: "notes",
-      gridCol: "full",
-      placeholder: "Add any additional notes about this order",
     },
   ];
 
   // Filter Configuration for Book Orders Table
   const bookOrderFilters: FilterConfig[] = [
     {
-      key: "status",
-      label: "Order Status",
+      key: "paymentMethod",
+      label: "Payment",
       type: "select",
+      sortable: true,
+      filterable: true,
+      width: "60px",
+      align: "center",
       options: [
-        { value: "pending", label: "Pending" },
-        { value: "confirmed", label: "Confirmed" },
-        { value: "shipped", label: "Shipped" },
-        { value: "delivered", label: "Delivered" },
-        { value: "cancelled", label: "Cancelled" },
-        { value: "refunded", label: "Refunded" },
+        { value: "credit_card", label: "Credit Card", color: "#f59e0b" },
+        { value: "paypal", label: "Paypal", color: "#3b82f6" },
+        { value: "stripe", label: "Stripe", color: "#8b5cf6" },
+        { value: "bank_transfer", label: "Bank Transfer", color: "#16a34a" },
+        {
+          value: "cash_on_delivery",
+          label: "Cash On Delivery",
+          color: "#ef4444",
+        },
       ],
     },
     {
@@ -323,58 +239,6 @@ export default function PaymentTrack({
         { value: "bank_transfer", label: "Bank Transfer" },
         { value: "cash_on_delivery", label: "Cash on Delivery" },
       ],
-    },
-  ];
-
-  // Action Configuration for Book Orders Table
-  const bookOrderActions: ActionConfig[] = [
-    {
-      key: "details",
-      label: "",
-      icon: (
-        <Lordicon
-          src="https://cdn.lordicon.com/knitbwfa.json"
-          trigger="hover"
-          size={20}
-          colors={{
-            primary: "#9ca3af",
-            secondary: "",
-          }}
-          stroke={4}
-        />
-      ),
-      variant: "ghost",
-      type: "navigate",
-      route: "/orders",
-      onClick: (item) => {
-        router.push(`/${pageUrl}/${item.id}`);
-      },
-    },
-    // {
-    //   key: "permission", // or "approve-decline"
-    //   label: "",
-    //   icon: (
-    //     <div className="flex items-center gap-1">
-    //       <Check className="w-4 h-4 text-green-600" />
-    //       <X className="w-4 h-4 text-red-600" />
-    //     </div>
-    //   ),
-    //   variant: "ghost",
-    //   onClick: (item) => {
-    //     // This will be handled by DynamicTable's handlePermissionAction
-    //     console.log("Permission action for:", item.orderId);
-    //   },
-    //   show: (item) => {
-    //     // Only show for orders that need approval (pending status)
-    //     return item.status === "pending" || item.status === "confirmed";
-    //   },
-    // },
-    {
-      key: "permission",
-      label: "",
-      icon: <Check className="w-4 h-4 text-green-600" />,
-      variant: "ghost",
-      onClick: (item) => console.log("Edit order:", item.orderId),
     },
   ];
 
@@ -392,40 +256,6 @@ export default function PaymentTrack({
     striped: true,
     emptyMessage: "No book orders found",
     loadingMessage: "Loading book orders...",
-  };
-
-  // Edit Modal Configuration for Book Order Form
-  const bookOrderEditModalConfig: EditModalConfig = {
-    title: "Edit Book Order",
-    description: "Update book order information and status",
-    width: "xl",
-    sections: [
-      {
-        key: "details",
-        title: "Order Details",
-        description: "Basic order and customer information",
-      },
-      {
-        key: "pricing",
-        title: "Pricing Information",
-        description: "Order pricing and quantity details",
-      },
-      {
-        key: "shipping",
-        title: "Shipping Details",
-        description: "Shipping address and tracking information",
-      },
-      {
-        key: "status",
-        title: "Status & Payment",
-        description: "Order status and payment information",
-      },
-      {
-        key: "notes",
-        title: "Notes",
-        description: "Additional order notes and comments",
-      },
-    ],
   };
 
   const handleDataChange = (newData: GenericDataItem[]) => {
@@ -509,11 +339,8 @@ export default function PaymentTrack({
       <DynamicTable
         data={bookOrders}
         columns={bookOrderColumns}
-        formFields={bookOrderFormFields}
         filters={bookOrderFilters}
-        actions={bookOrderActions}
         tableConfig={bookOrderTableConfig}
-        editModalConfig={bookOrderEditModalConfig}
         onDataChange={handleDataChange}
         onItemEdit={handleBookOrderEdit}
         onItemDelete={handleBookOrderDelete}

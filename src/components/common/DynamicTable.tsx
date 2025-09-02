@@ -91,6 +91,7 @@ interface DynamicTableProps {
     requireReason?: boolean;
     requireReasonForApprove?: boolean;
   };
+  isDeletable?: boolean;
 }
 
 export const DynamicTable: React.FC<DynamicTableProps> = ({
@@ -173,6 +174,33 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   useEffect(() => {
     setLocalData(data);
   }, [data]);
+
+  // Enhanced renderIcon function to handle different icon types
+  const renderIcon = useCallback((option: any) => {
+    if (!option.icon) return null;
+
+    switch (option.iconType) {
+      case "image":
+        return (
+          <img
+            src={option.iconUrl || option.icon}
+            alt={option.label}
+            className="w-4 h-4 object-contain"
+            onError={(e) => {
+              // Fallback to emoji or text if image fails
+              e.currentTarget.style.display = "none";
+            }}
+          />
+        );
+      case "component":
+        // If you have a component library, you can render it here
+        // For now, we'll treat it as emoji
+        return <span className="text-sm">{option.icon}</span>;
+      case "emoji":
+      default:
+        return <span className="text-sm">{option.icon}</span>;
+    }
+  }, []);
 
   // Format value based on column type
   const formatValue = useCallback(
@@ -462,7 +490,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
     }
   };
 
-  // Render filter controls
+  // Enhanced render filters with custom icons and colors
   const renderFilters = () => {
     if (!config.enableFilters || filters.length === 0) return null;
 
@@ -489,7 +517,14 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                     <SelectItem value="all">All {filter.label}</SelectItem>
                     {filter.options?.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                        <div className="flex items-center gap-2">
+                          {renderIcon(option)}
+                          <span
+                            style={{ color: option.textColor || "inherit" }}
+                          >
+                            {option.label}
+                          </span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -534,7 +569,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
     );
   };
 
-  // Render cell content with avatar support
+  // Enhanced render cell content with avatar support and custom styling
   const renderCellContent = (item: GenericDataItem, column: ColumnConfig) => {
     const value = item[column.key];
 
@@ -578,6 +613,72 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
       );
     }
 
+    // Handle book column with avatar
+    if (column.key === "bookName" && column.showAvatar) {
+      return (
+        <div className="flex items-center gap-3">
+          <Avatar className="w-10 h-10 flex-shrink-0 rounded-md">
+            <AvatarImage
+              src={item[column.avatarKey || "bookCover"] || "/placeholder.svg"}
+              alt={value?.toString() || "Book"}
+              className="object-cover"
+            />
+            <AvatarFallback className="rounded-md">
+              <span className="text-xs">📚</span>
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-sm truncate">
+              {formatValue(value, column)}
+            </p>
+            {typeof item.author === "string" && (
+              <p className="font-normal text-xs text-gray-500 truncate">
+                by {String(item.author)}
+              </p>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // Handle customer column with avatar
+    if (column.key === "customer" && column.showAvatar) {
+      return (
+        <div className="flex items-center gap-2">
+          <Avatar className="w-8 h-8 flex-shrink-0">
+            <AvatarImage
+              src={
+                item[column.avatarKey || "customerAvatar"] || "/placeholder.svg"
+              }
+              alt={value?.toString() || "Customer"}
+            />
+            <AvatarFallback>
+              <Lordicon
+                src="https://cdn.lordicon.com/hhljfoaj.json"
+                trigger="hover"
+                size={24}
+                colors={{
+                  primary: "",
+                  secondary: "",
+                }}
+                stroke={1}
+              />
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-sm truncate">
+              {formatValue(value, column)}
+            </p>
+            {typeof item.customerEmail === "string" && (
+              <p className="font-normal text-xs text-gray-500 truncate">
+                {String(item.customerEmail)}
+              </p>
+            )}
+          </div>
+        </div>
+      );
+    }
+
     // Handle special column types
     if (column.type === "checkbox") {
       return <Checkbox checked={Boolean(value)} disabled className="mx-auto" />;
@@ -598,14 +699,17 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
               <Badge
                 key={index}
                 variant="secondary"
-                className="text-xs"
-                style={
-                  option?.color
-                    ? { backgroundColor: option.color, color: "white" }
-                    : undefined
-                }
+                className={cn(
+                  "text-xs flex items-center gap-1 px-2 py-1",
+                  "border-0 font-medium"
+                )}
+                style={{
+                  backgroundColor: option?.color || "#e5e7eb",
+                  color: option?.textColor || "#374151",
+                }}
               >
-                {option?.label || val}
+                {renderIcon(option)}
+                <span>{option?.label || val}</span>
               </Badge>
             );
           })}
@@ -878,20 +982,6 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                     {(actions.length > 0 || formFields.length > 0) && (
                       <TableCell className="w-[150px] px-3">
                         <div className="flex items-center justify-center gap-1">
-                          {/* Only show Edit button if formFields exist and no custom edit action */}
-                          {formFields.length > 0 &&
-                            !actions.some(
-                              (action) => action.key === "edit"
-                            ) && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleEdit(item)}
-                              >
-                                
-                              </Button>
-                            )}
-                          {/* Render custom actions */}
                           {actions.map((action) => {
                             if (action.show && !action.show(item)) return null;
                             return (
@@ -904,6 +994,8 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                                     handleView(item);
                                   } else if (action.key === "edit") {
                                     handleEdit(item);
+                                  } else if (action.key === "delete") {
+                                    handleDelete(item);
                                   } else if (action.key === "details") {
                                     handleDetails(item, action.route);
                                   } else if (
@@ -922,29 +1014,6 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                               </Button>
                             );
                           })}
-                          {/* Only show Delete button if no custom delete action and onItemDelete exists */}
-                          {onItemDelete &&
-                            !actions.some(
-                              (action) => action.key === "delete"
-                            ) && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDelete(item)}
-                                className="text-red-600 hover:text-red-700"
-                              >
-                                <Lordicon
-                                  src="https://cdn.lordicon.com/jmkrnisz.json"
-                                  trigger="hover"
-                                  size={20}
-                                  colors={{
-                                    primary: "#FF0000",
-                                    secondary: "#ffffff",
-                                  }}
-                                  stroke={1}
-                                />
-                              </Button>
-                            )}
                         </div>
                       </TableCell>
                     )}

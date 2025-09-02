@@ -77,7 +77,7 @@ export default function BooksOrdersManage({
       sortable: true,
       searchable: true,
       align: "left",
-      width: "120px",
+      width: "50px",
     },
     {
       key: "customer",
@@ -87,7 +87,7 @@ export default function BooksOrdersManage({
       showAvatar: true,
       avatarKey: "customerAvatar",
       align: "left",
-      width: "250px",
+      width: "100px",
     },
     {
       key: "bookName",
@@ -105,7 +105,7 @@ export default function BooksOrdersManage({
       type: "date",
       sortable: true,
       align: "center",
-      width: "120px",
+      width: "50px",
     },
     {
       key: "totalAmount",
@@ -113,7 +113,7 @@ export default function BooksOrdersManage({
       type: "currency",
       sortable: true,
       align: "right",
-      width: "100px",
+      width: "50px",
     },
     {
       key: "status",
@@ -121,7 +121,7 @@ export default function BooksOrdersManage({
       type: "select",
       sortable: true,
       filterable: true,
-      width: "120px",
+      width: "80px",
       align: "center",
       options: [
         { value: "pending", label: "Pending", color: "#f59e0b" },
@@ -380,6 +380,24 @@ export default function BooksOrdersManage({
       key: "permission",
       label: "",
       icon: <Check className="w-4 h-4 text-green-600" />,
+      variant: "ghost",
+      onClick: (item) => console.log("Edit order:", item.orderId),
+    },
+    {
+      key: "delete",
+      label: "",
+      icon: (
+        <Lordicon
+          src="https://cdn.lordicon.com/jmkrnisz.json"
+          trigger="hover"
+          size={20}
+          colors={{
+            primary: "#FF0000",
+            secondary: "#ffffff",
+          }}
+          stroke={4}
+        />
+      ),
       variant: "ghost",
       onClick: (item) => console.log("Edit order:", item.orderId),
     },
