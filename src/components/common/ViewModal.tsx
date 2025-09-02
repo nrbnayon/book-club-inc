@@ -294,7 +294,7 @@ export const ViewModal: React.FC<ViewModalProps> = ({
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <Building className="w-5 h-5 text-green-600" />
-                <h3 className="text-lg font-semibold">Work Information</h3>
+                <h3 className="text-lg font-semibold">Basic Information</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {workFields.map((column) => {

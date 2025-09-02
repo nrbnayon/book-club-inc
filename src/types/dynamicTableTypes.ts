@@ -46,7 +46,13 @@ export interface SelectOption {
   value: string;
   label: string;
   color?: string;
-  [key: string]:DataValue | DataValue[] | File[] | unknown| string | undefined;
+  [key: string]:
+    | DataValue
+    | DataValue[]
+    | File[]
+    | unknown
+    | string
+    | undefined;
 }
 
 export interface ColumnConfig {
@@ -139,6 +145,8 @@ export interface ActionConfig {
   onClick: (item: GenericDataItem) => void;
   show?: (item: GenericDataItem) => boolean;
   className?: string;
+  pageUrl?: string;
+  route?: string;
   [key: string]:
     | DataValue
     | DataValue[]

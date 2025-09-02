@@ -1,6 +1,6 @@
 // src\components\common\DynamicTable.tsx
 "use client";
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import {
   Search,
   Calendar,
@@ -8,7 +8,6 @@ import {
   ChevronDown,
   Download,
   RefreshCw,
-  Trash2,
   ArrowRight,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -95,7 +94,6 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   onItemDelete,
   onItemsSelect,
   onExport,
-  onRefresh,
   buttonText,
   pageUrl,
   isLoading = false,
@@ -152,7 +150,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   };
 
   // Update local data when props change
-  React.useEffect(() => {
+  useEffect(() => {
     setLocalData(data);
   }, [data]);
 
@@ -370,7 +368,13 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   // Handle view
   const handleView = (item: GenericDataItem) => {
     setViewItem(item);
+    console.log("Get items details:: ", item);
     setViewModalOpen(true);
+  };
+
+  const handleDetails = (item: GenericDataItem, route?: string) => {
+    console.log("router::", route);
+    router.push(`${route}/${item.id}`);
   };
 
   // Handle delete
@@ -619,7 +623,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   };
 
   // Update selected items callback
-  React.useEffect(() => {
+  useEffect(() => {
     onItemsSelect?.(selectedItems);
   }, [selectedItems, onItemsSelect]);
 
@@ -680,16 +684,6 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
           {renderFilters()}
         </div>
         <div className="flex flex-row gap-2 w-full lg:w-auto justify-center lg:justify-end">
-          {onRefresh && (
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={onRefresh}
-              className="border-primary/30 rounded-md flex-1 lg:flex-none"
-            >
-              <RefreshCw className="w-4 h-4" />
-            </Button>
-          )}
           {onExport && (
             <Button
               variant="outline"
@@ -727,23 +721,6 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                 Export Selected
               </Button>
             )}
-            {onItemDelete && (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => {
-                  setDeleteConfirm({
-                    open: true,
-                    itemId: "bulk",
-                    itemName: `${selectedItems.length} selected items`,
-                  });
-                }}
-                className="w-full md:w-auto"
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete Selected
-              </Button>
-            )}
             <Button
               variant="outline"
               size="sm"
@@ -757,13 +734,13 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
       )}
 
       {/* Table */}
-      <div className="border border-primary/80 rounded-lg overflow-hidden">
+      <div className="border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table className="w-full">
             <TableHeader
               className={cn(
                 config.stickyHeader && "sticky top-0 z-10",
-                "text-black bg-yellow-50"
+                "text-black bg-gray-100"
               )}
             >
               <TableRow className={cn(config.bordered && "border-b")}>
@@ -890,6 +867,8 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                                     handleView(item);
                                   } else if (action.key === "edit") {
                                     handleEdit(item);
+                                  } else if (action.key === "details") {
+                                    handleDetails(item, action.route);
                                   } else {
                                     action.onClick(item);
                                   }

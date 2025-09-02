@@ -65,7 +65,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         label: "Users",
         href: "/manage-users",
         iconSrc: "https://cdn.lordicon.com/fqbvgezn.json",
-        subLinks: [{ label: "User details", href: "/manage-users/details" }],
+        // subLinks: [{ label: "User details", href: "/manage-users/details" }],
       },
       {
         label: "Orders",

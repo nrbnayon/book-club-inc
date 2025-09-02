@@ -2,11 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { AlarmClockPlus, TrendingUp, TrendingDown } from "lucide-react";
-import {
-  MetricCardProps,
-  MetricData,
-} from "@/types/statsCardDataTypes";
-import { defaultMetrics } from "@/data/statsCardDataSets";
+import { MetricCardProps, MetricData } from "@/types/statsCardDataTypes";
 
 const MetricCard: React.FC<MetricCardProps> = ({
   title,
@@ -66,7 +62,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
           className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
           aria-label="More options"
         >
-          <AlarmClockPlus  size={20} />
+          <AlarmClockPlus size={20} />
         </button>
       </div>
 
@@ -143,7 +139,16 @@ interface StatsCardProps {
   metrics?: MetricData[];
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({ metrics = defaultMetrics }) => {
+const StatsCard: React.FC<StatsCardProps> = ({ metrics = [] }) => {
+  // Early return if no metrics
+  if (!metrics || metrics.length === 0) {
+    return (
+      <div className="mx-auto">
+        <div className="text-center text-gray-500">No metrics available</div>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -164,56 +169,3 @@ const StatsCard: React.FC<StatsCardProps> = ({ metrics = defaultMetrics }) => {
 };
 
 export default StatsCard;
-
-
-//
-// Example usage in src/pages/Dashboard.tsx
-// import React from "react";
-// import StatsCard from "@/components/common/StatsCard";
-// import { MetricData } from "@/types/statsCardDataTypes";
-
-// const Dashboard: React.FC = () => {
-//   // Example of custom metrics
-//   const customMetrics: MetricData[] = [
-//     {
-//       title: "Revenue",
-//       value: "$15,230",
-//       trend: "up",
-//       trendValue: "25",
-//       trendColor: "text-green-600",
-//       sparklinePoints: [100, 120, 110, 130, 150, 140, 160, 180, 170, 190, 200, 220],
-//     },
-//     {
-//       title: "New Users",
-//       value: "850",
-//       trend: "down",
-//       trendValue: "5",
-//       trendColor: "text-red-500",
-//       sparklinePoints: [50, 48, 45, 42, 40, 38, 35, 33, 30, 28, 25, 22],
-//     },
-//     {
-//       title: "Engagement",
-//       value: "65%",
-//       trend: "up",
-//       trendValue: "15",
-//       trendColor: "text-green-600",
-//       sparklinePoints: [20, 25, 30, 28, 32, 35, 40, 45, 50, 55, 60, 65],
-//     },
-//   ];
-
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-//       {/* Using default metrics */}
-//       <StatsCard />
-      
-//       {/* Using custom metrics */}
-//       <div className="mt-8">
-//         <h2 className="text-xl font-semibold mb-4">Custom Metrics</h2>
-//         <StatsCard metrics={customMetrics} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;

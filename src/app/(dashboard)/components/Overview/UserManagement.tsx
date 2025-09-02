@@ -51,6 +51,30 @@ export default function UserManagement({
       width: "250px",
     },
     {
+      key: "createdAt",
+      label: "Join Date",
+      type: "date",
+      sortable: true,
+      searchable: true,
+      width: "100px",
+      formatValue: (value: string | Date | null | undefined) => {
+        if (!value) return "";
+        const date = new Date(value);
+        return date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+      },
+    },
+    {
+      key: "location",
+      label: "Location",
+      sortable: false,
+      searchable: true,
+      width: "100px",
+    },
+    {
       key: "status",
       label: "Status",
       type: "select",
@@ -220,16 +244,6 @@ export default function UserManagement({
         { value: "inactive", label: "Inactive" },
         { value: "blocked", label: "Blocked" },
         { value: "pending", label: "Pending" },
-      ],
-    },
-    {
-      key: "accountType",
-      label: "Account Type",
-      type: "select",
-      options: [
-        { value: "free", label: "Free" },
-        { value: "premium", label: "Premium" },
-        { value: "enterprise", label: "Enterprise" },
       ],
     },
   ];
