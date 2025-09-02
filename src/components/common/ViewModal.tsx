@@ -110,12 +110,15 @@ export const ViewModal: React.FC<ViewModalProps> = ({
             variant='secondary'
             className='text-xs'
             style={
-              option?.color && option?.textColor
+              option?.color &&
+              option?.textColor &&
+              typeof option.color === "string" &&
+              typeof option.textColor === "string"
                 ? {
                     backgroundColor: option.color,
                     color: option.textColor,
                   }
-                : option?.color
+                : option?.color && typeof option.color === "string"
                 ? { backgroundColor: option.color, color: "white" }
                 : undefined
             }
@@ -137,12 +140,15 @@ export const ViewModal: React.FC<ViewModalProps> = ({
                   variant='secondary'
                   className='text-xs'
                   style={
-                    option?.color && option?.textColor
+                    option?.color &&
+                    option?.textColor &&
+                    typeof option.color === "string" &&
+                    typeof option.textColor === "string"
                       ? {
                           backgroundColor: option.color,
                           color: option.textColor,
                         }
-                      : option?.color
+                      : option?.color && typeof option.color === "string"
                       ? { backgroundColor: option.color, color: "white" }
                       : undefined
                   }
