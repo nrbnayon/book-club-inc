@@ -1,13 +1,13 @@
 // src\app\(dashboard)\manage-ads\page.tsx
 import DashboardHeader from "../components/dashboard-header";
-import ManagementAds from "../components/Advertisements/ManagementAds";
+import BannerManagement from "../components/AppBanner/BannerManagement";
 
 export default function BannerPage() {
   return (
     <div>
       <DashboardHeader title='Upload your new banner' />
       <div className='p-2 md:p-5'>
-        <ManagementAds itemsPerPage={4} showAds={1} title='Advertisements' />
+        <BannerManagement itemsPerPage={1} showAds={1} title='App Banner' />
       </div>
     </div>
   );

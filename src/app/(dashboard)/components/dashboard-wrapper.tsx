@@ -89,6 +89,11 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         iconSrc: CloudUpload,
       },
       {
+        label: "Banner",
+        href: "/banner",
+        iconSrc: "https://cdn.lordicon.com/ijsqrapz.json",
+      },
+      {
         label: "Settings",
         href: "/settings",
         iconSrc: "https://cdn.lordicon.com/asyunleq.json",
@@ -257,7 +262,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         return (
           <Lordicon
             src={iconSrc}
-            trigger="hover"
+            trigger='hover'
             stroke={3}
             colors={getIconColors(isActive, isDark)}
             size={24}
@@ -292,7 +297,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
         "h-screen overflow-hidden relative"
       )}
     >
-      <div className="relative overflow-visible flex">
+      <div className='relative overflow-visible flex'>
         <Sidebar
           open={open}
           setOpen={setOpen}
@@ -306,8 +311,8 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
               "dark:bg-primary-dark dark:bg-dark"
             )}
           >
-            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              <div className="flex items-center justify-center my-8 ">
+            <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
+              <div className='flex items-center justify-center my-6 '>
                 <Logo open={open} />
               </div>
 
@@ -317,21 +322,21 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                   opacity: open ? 1 : 0,
                   height: open ? "auto" : "0px",
                 }}
-                className="mb-4 overflow-hidden"
+                className='mb-4 overflow-hidden'
               >
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <div className='relative'>
+                  <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
                   <input
-                    type="text"
-                    placeholder="Search"
+                    type='text'
+                    placeholder='Search'
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:border-gray-300"
+                    className='w-full pl-10 pr-4 py-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:border-gray-300'
                   />
                 </div>
               </motion.div>
 
-              <div className="flex flex-col gap-2 md:gap-3">
+              <div className='flex flex-col gap-2'>
                 {filteredLinks.map((link, idx) => {
                   const isActive = isLinkActive(link);
                   const isDark = theme === "dark";
@@ -361,7 +366,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                   return (
                     <div
                       key={idx}
-                      className="relative"
+                      className='relative'
                       onMouseEnter={() => {
                         if (hasSubLinks) {
                           setHoveredItem(link.label);
@@ -381,7 +386,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                       }}
                     >
                       {/* Main Link */}
-                      <div className="flex items-center relative">
+                      <div className='flex items-center relative'>
                         <Link
                           href={link.href}
                           className={cn(
@@ -391,7 +396,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                               : "text-black/80 hover:text-black hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
                           )}
                         >
-                          <span className="flex-shrink-0 mt-1.5">
+                          <span className='flex-shrink-0 mt-1.5'>
                             {renderIcon(link.iconSrc, isActive, isDark)}
                           </span>
                           <motion.span
@@ -399,7 +404,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                               display: open ? "inline-block" : "none",
                               opacity: open ? 1 : 0,
                             }}
-                            className="text-sm whitespace-pre inline-block !p-0 !m-0 flex-1"
+                            className='text-sm whitespace-pre inline-block !p-0 !m-0 flex-1'
                           >
                             {link.label}
                           </motion.span>
@@ -420,9 +425,9 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                               )}
                             >
                               {isExpanded ? (
-                                <ChevronUp className="h-4 w-4" />
+                                <ChevronUp className='h-4 w-4' />
                               ) : (
-                                <ChevronDown className="h-4 w-4" />
+                                <ChevronDown className='h-4 w-4' />
                               )}
                             </button>
                           )}
@@ -436,7 +441,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
-                          className="ml-8 mt-1 space-y-1 overflow-hidden"
+                          className='ml-8 mt-1 space-y-1 overflow-hidden'
                           onMouseEnter={() => {
                             setHoveredItem(link.label);
                           }}
@@ -462,8 +467,8 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                                   : "text-black/70 hover:text-black hover:bg-primary/10 dark:text-white/70 dark:hover:text-white dark:hover:bg-primary/20"
                               )}
                             >
-                              <div className="w-2 h-2 rounded-full bg-gray-400 flex-shrink-0" />
-                              <span className="text-sm whitespace-pre">
+                              <div className='w-2 h-2 rounded-full bg-gray-400 flex-shrink-0' />
+                              <span className='text-sm whitespace-pre'>
                                 {subLink.label}
                               </span>
                             </Link>
@@ -476,10 +481,10 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
               </div>
             </div>
 
-            <div className="border-t border-gray-300">
-              <div className="my-1">
+            <div className='border-t border-gray-300'>
+              <div className='my-1'>
                 <Link
-                  href="/profile"
+                  href='/profile'
                   className={cn(
                     "flex items-center gap-3 px-2 py-1 rounded-lg transition-all duration-200",
                     pathname === "/profile"
@@ -488,8 +493,8 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                   )}
                 >
                   <Lordicon
-                    src="https://cdn.lordicon.com/hrjifpbq.json"
-                    trigger="hover"
+                    src='https://cdn.lordicon.com/hrjifpbq.json'
+                    trigger='hover'
                     colors={getIconColors(
                       pathname === "/profile",
                       theme === "dark"
@@ -502,7 +507,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                       display: open ? "inline-block" : "none",
                       opacity: open ? 1 : 0,
                     }}
-                    className="text-sm whitespace-pre inline-block !p-0 !m-0"
+                    className='text-sm whitespace-pre inline-block !p-0 !m-0'
                   >
                     Profile
                   </motion.span>
@@ -512,16 +517,16 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                 onClick={() => {
                   console.log("Logout clicked");
                 }}
-                className="w-full"
+                className='w-full'
               >
-                <div className="flex items-center gap-3 p-2 rounded-lg text-red-400 hover:text-red-500 hover:bg-red-500/10 transition-all duration-200">
-                  <LogOut className="h-6 w-6 flex-shrink-0 stroke-2 text-red-400 hover:text-red-500" />
+                <div className='flex items-center gap-3 p-2 rounded-lg text-red-400 hover:text-red-500 hover:bg-red-500/10 transition-all duration-200'>
+                  <LogOut className='h-6 w-6 flex-shrink-0 stroke-2 text-red-400 hover:text-red-500' />
                   <motion.span
                     animate={{
                       display: open ? "inline-block" : "none",
                       opacity: open ? 1 : 0,
                     }}
-                    className="text-sm whitespace-pre inline-block !p-0 !m-0"
+                    className='text-sm whitespace-pre inline-block !p-0 !m-0'
                   >
                     Log Out
                   </motion.span>
@@ -533,11 +538,11 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
 
         {/* Resizable Border */}
         <div
-          className="hidden md:block w-1 bg-transparent cursor-col-resize hover:bg-blue-500/20 transition-colors duration-200 relative group"
+          className='hidden md:block w-1 bg-transparent cursor-col-resize hover:bg-blue-500/20 transition-colors duration-200 relative group'
           onMouseDown={handleMouseDown}
         >
-          <div className="absolute inset-0 w-2 -ml-0.5 bg-transparent" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-gray-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          <div className='absolute inset-0 w-2 -ml-0.5 bg-transparent' />
+          <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-gray-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
         </div>
 
         {/* Toggle Button */}
@@ -549,9 +554,9 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
           )}
         >
           {open ? (
-            <PanelRightOpen className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <PanelRightOpen className='h-4 w-4 text-gray-600 dark:text-gray-400' />
           ) : (
-            <PanelLeftOpen className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <PanelLeftOpen className='h-4 w-4 text-gray-600 dark:text-gray-400' />
           )}
         </button>
       </div>
@@ -562,19 +567,19 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
 
 const Logo = ({ open }: { open: boolean }) => {
   return (
-    <div className="font-normal flex items-center text-sm relative z-20 w-full justify-center">
+    <div className='font-normal flex items-center text-sm relative z-20 w-full justify-center'>
       <motion.div
         animate={{
           width: open ? "90px" : "40px",
           height: open ? "90px" : "40px",
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="flex items-center justify-center overflow-hidden"
+        className='flex items-center justify-center overflow-hidden'
       >
         <Image
-          className="w-full h-full object-contain"
-          alt="Book Logo"
-          src="/logo.png"
+          className='w-full h-full object-contain'
+          alt='Book Logo'
+          src='/logo.png'
           width={open ? 90 : 40}
           height={open ? 90 : 40}
         />
@@ -585,8 +590,8 @@ const Logo = ({ open }: { open: boolean }) => {
 
 const Dashboard = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-1 bg-card min-h-0">
-      <div className="p-0 rounded-tl-2xl bg-white dark:bg-background flex flex-col gap-2 flex-1 w-full overflow-y-auto overflow-x-hidden scrollbar-custom scrollbar-thin">
+    <div className='flex flex-1 bg-card min-h-0'>
+      <div className='p-0 rounded-tl-2xl bg-white dark:bg-background flex flex-col gap-2 flex-1 w-full overflow-y-auto overflow-x-hidden scrollbar-custom scrollbar-thin'>
         {children}
       </div>
     </div>

@@ -309,12 +309,14 @@ export function DynamicCard3D({
           <CardItem translateZ='50' className='w-full pt-3'>
             <CardHeader className='pb-3'>
               <div className='pr-20'>
-                <CardItem
-                  translateZ='60'
-                  className='text-lg font-bold text-gray-900 dark:text-white line-clamp-2 group-hover/card:text-primary transition-colors'
-                >
-                  {truncateText(String(title), 30)}
-                </CardItem>
+                {title as string && (
+                  <CardItem
+                    translateZ='60'
+                    className='text-lg font-bold text-gray-900 dark:text-white line-clamp-2 group-hover/card:text-primary transition-colors'
+                  >
+                    {truncateText(String(title), 30)}
+                  </CardItem>
+                )}
                 {typeof subtitle === "string" && subtitle && (
                   <CardItem
                     translateZ='40'

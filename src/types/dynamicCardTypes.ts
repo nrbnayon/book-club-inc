@@ -51,7 +51,6 @@ export interface GenericDataItem {
   [key: string]: any;
 }
 
-
 export type FieldType =
   | "text"
   | "number"
@@ -194,7 +193,7 @@ export interface FormSection {
 }
 
 export interface CardConfig {
-  titleKey: string;
+  titleKey?: string;
   subtitleKey?: string;
   imageKey?: string;
   descriptionKey?: string;
