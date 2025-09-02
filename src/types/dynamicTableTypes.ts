@@ -71,7 +71,8 @@ export interface ColumnConfig {
   className?: string;
   headerClassName?: string;
   options?: SelectOption[];
-  showAvatar?: boolean; // New property for avatar display
+  showAvatar?: boolean;
+  avatarKey?: string;
   [key: string]:
     | DataValue
     | DataValue[]

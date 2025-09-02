@@ -16,7 +16,7 @@ export default function DashboardHeader({
         "md:sticky top-0 z-50 p-2 md:p-4 w-full transition-all duration-200bg-white/10 dark:bg-background/10 backdrop-blur-3xl border-b-1"
       )}
     >
-      <div className=" mx-auto">
+      <div className="mx-auto">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-3xl font-bold text-[#0F304E] tracking-tight">

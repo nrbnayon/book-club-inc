@@ -116,6 +116,58 @@ export default function BooksOrdersManage({
       width: "50px",
     },
     {
+      key: "paymentMethod",
+      label: "Payment",
+      type: "select",
+      sortable: true,
+      filterable: true,
+      width: "60px",
+      align: "center",
+      options: [
+        {
+          value: "credit_card",
+          label: "Credit Card",
+          color: "#f59e0b",
+          textColor: "#1f2937",
+          icon: "💳",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+        {
+          value: "paypal",
+          label: "",
+          icon: "/icons/paypal.png",
+          iconType: "image",
+          iconUrl: "/icons/paypal.png",
+        },
+        {
+          value: "stripe",
+          label: "",
+          icon: "/icons/stripe.png",
+          iconType: "image",
+          iconUrl: "/icons/stripe.png",
+        },
+        {
+          value: "bank_transfer",
+          label: "Bank Transfer",
+          color: "#16a34a",
+          textColor: "#ffffff",
+          icon: "🏦",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+        {
+          value: "cash_on_delivery",
+          label: "Cash On Delivery",
+          color: "#ef4444",
+          textColor: "#ffffff",
+          icon: "💵",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+      ],
+    },
+    {
       key: "status",
       label: "Status",
       type: "select",
@@ -124,12 +176,42 @@ export default function BooksOrdersManage({
       width: "80px",
       align: "center",
       options: [
-        { value: "pending", label: "Pending", color: "#f59e0b" },
-        { value: "confirmed", label: "Confirmed", color: "#3b82f6" },
-        { value: "shipped", label: "Shipped", color: "#8b5cf6" },
-        { value: "delivered", label: "Delivered", color: "#16a34a" },
-        { value: "cancelled", label: "Cancelled", color: "#ef4444" },
-        { value: "refunded", label: "Refunded", color: "#6b7280" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "confirmed",
+          label: "Confirmed",
+          color: "#DBEAFE",
+          textColor: "#1E3A8A",
+        },
+        {
+          value: "shipped",
+          label: "Shipped",
+          color: "#EDE9FE",
+          textColor: "#5B21B6",
+        },
+        {
+          value: "delivered",
+          label: "Delivered",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
       ],
     },
     {
@@ -141,10 +223,42 @@ export default function BooksOrdersManage({
       width: "120px",
       align: "center",
       options: [
-        { value: "pending", label: "Pending", color: "#f59e0b" },
-        { value: "paid", label: "Paid", color: "#16a34a" },
-        { value: "failed", label: "Failed", color: "#ef4444" },
-        { value: "refunded", label: "Refunded", color: "#6b7280" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "paid",
+          label: "Paid",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "failed",
+          label: "Failed",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
       ],
     },
   ];
@@ -239,6 +353,21 @@ export default function BooksOrdersManage({
       gridCol: "half",
     },
     {
+      key: "paymentMethod",
+      label: "Payment Method",
+      type: "select",
+      required: true,
+      section: "status",
+      gridCol: "full",
+      options: [
+        { value: "credit_card", label: "Credit Card" },
+        { value: "paypal", label: "PayPal" },
+        { value: "stripe", label: "Stripe" },
+        { value: "bank_transfer", label: "Bank Transfer" },
+        { value: "cash_on_delivery", label: "Cash on Delivery" },
+      ],
+    },
+    {
       key: "status",
       label: "Order Status",
       type: "select",
@@ -262,25 +391,42 @@ export default function BooksOrdersManage({
       section: "status",
       gridCol: "half",
       options: [
-        { value: "pending", label: "Pending" },
-        { value: "paid", label: "Paid" },
-        { value: "failed", label: "Failed" },
-        { value: "refunded", label: "Refunded" },
-      ],
-    },
-    {
-      key: "paymentMethod",
-      label: "Payment Method",
-      type: "select",
-      required: true,
-      section: "status",
-      gridCol: "full",
-      options: [
-        { value: "credit_card", label: "Credit Card" },
-        { value: "paypal", label: "PayPal" },
-        { value: "stripe", label: "Stripe" },
-        { value: "bank_transfer", label: "Bank Transfer" },
-        { value: "cash_on_delivery", label: "Cash on Delivery" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "paid",
+          label: "Paid",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "failed",
+          label: "Failed",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
       ],
     },
     {
@@ -296,6 +442,58 @@ export default function BooksOrdersManage({
   // Filter Configuration for Book Orders Table
   const bookOrderFilters: FilterConfig[] = [
     {
+      key: "paymentMethod",
+      label: "Payment",
+      type: "select",
+      sortable: true,
+      filterable: true,
+      width: "60px",
+      align: "center",
+      options: [
+        {
+          value: "credit_card",
+          label: "Credit Card",
+          color: "#f59e0b",
+          textColor: "#1f2937",
+          icon: "💳",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+        {
+          value: "paypal",
+          label: "Paypal",
+          icon: "/icons/paypal.png",
+          iconType: "image",
+          iconUrl: "/icons/paypal.png",
+        },
+        {
+          value: "stripe",
+          label: "Stripe",
+          icon: "/icons/stripe.png",
+          iconType: "image",
+          iconUrl: "/icons/stripe.png",
+        },
+        {
+          value: "bank_transfer",
+          label: "Bank Transfer",
+          color: "#16a34a",
+          textColor: "#ffffff",
+          icon: "🏦",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+        {
+          value: "cash_on_delivery",
+          label: "Cash On Delivery",
+          color: "#ef4444",
+          textColor: "#ffffff",
+          icon: "💵",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+      ],
+    },
+    {
       key: "status",
       label: "Order Status",
       type: "select",
@@ -313,22 +511,42 @@ export default function BooksOrdersManage({
       label: "Payment Status",
       type: "select",
       options: [
-        { value: "pending", label: "Pending" },
-        { value: "paid", label: "Paid" },
-        { value: "failed", label: "Failed" },
-        { value: "refunded", label: "Refunded" },
-      ],
-    },
-    {
-      key: "paymentMethod",
-      label: "Payment Method",
-      type: "select",
-      options: [
-        { value: "credit_card", label: "Credit Card" },
-        { value: "paypal", label: "PayPal" },
-        { value: "stripe", label: "Stripe" },
-        { value: "bank_transfer", label: "Bank Transfer" },
-        { value: "cash_on_delivery", label: "Cash on Delivery" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "paid",
+          label: "Paid",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "failed",
+          label: "Failed",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
       ],
     },
   ];
@@ -340,8 +558,8 @@ export default function BooksOrdersManage({
       label: "",
       icon: (
         <Lordicon
-          src="https://cdn.lordicon.com/knitbwfa.json"
-          trigger="hover"
+          src='https://cdn.lordicon.com/knitbwfa.json'
+          trigger='hover'
           size={20}
           colors={{
             primary: "#9ca3af",
@@ -357,29 +575,10 @@ export default function BooksOrdersManage({
         router.push(`/${pageUrl}/${item.id}`);
       },
     },
-    // {
-    //   key: "permission", // or "approve-decline"
-    //   label: "",
-    //   icon: (
-    //     <div className="flex items-center gap-1">
-    //       <Check className="w-4 h-4 text-green-600" />
-    //       <X className="w-4 h-4 text-red-600" />
-    //     </div>
-    //   ),
-    //   variant: "ghost",
-    //   onClick: (item) => {
-    //     // This will be handled by DynamicTable's handlePermissionAction
-    //     console.log("Permission action for:", item.orderId);
-    //   },
-    //   show: (item) => {
-    //     // Only show for orders that need approval (pending status)
-    //     return item.status === "pending" || item.status === "confirmed";
-    //   },
-    // },
     {
       key: "permission",
       label: "",
-      icon: <Check className="w-4 h-4 text-green-600" />,
+      icon: <Check className='w-4 h-4 text-green-600' />,
       variant: "ghost",
       onClick: (item) => console.log("Edit order:", item.orderId),
     },
@@ -388,8 +587,8 @@ export default function BooksOrdersManage({
       label: "",
       icon: (
         <Lordicon
-          src="https://cdn.lordicon.com/jmkrnisz.json"
-          trigger="hover"
+          src='https://cdn.lordicon.com/jmkrnisz.json'
+          trigger='hover'
           size={20}
           colors={{
             primary: "#FF0000",
@@ -399,7 +598,7 @@ export default function BooksOrdersManage({
         />
       ),
       variant: "ghost",
-      onClick: (item) => console.log("Edit order:", item.orderId),
+      onClick: (item) => console.log("Delete order:", item.orderId),
     },
   ];
 
@@ -525,13 +724,12 @@ export default function BooksOrdersManage({
   };
 
   return (
-    <div className="w-full mx-auto">
+    <div className='w-full mx-auto'>
+      <div className='h-3'></div>
       <StatsCard metrics={orderMetrics} />
-      <div className="w-full flex justify-between items-center my-5">
-        <h2 className="text-foreground text-xl font-semibold">{title}</h2>
-      </div>
-
+      <div className='h-5'></div>
       <DynamicTable
+        title={title}
         data={bookOrders}
         columns={bookOrderColumns}
         formFields={bookOrderFormFields}

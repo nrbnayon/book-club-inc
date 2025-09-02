@@ -10,7 +10,7 @@ import type {
 } from "@/types/dynamicTableTypes";
 import { DynamicTable } from "@/components/common/DynamicTable";
 import StatsCard from "@/components/common/StatsCard";
-import { orderMetrics } from "@/data/statsCardDataSets";
+import { orderStatusStats } from "@/data/statsCardDataSets";
 
 interface BookOrderManagementProps {
   itemsPerPage?: number;
@@ -103,7 +103,7 @@ export default function PaymentTrack({
     },
     {
       key: "paymentMethod",
-      label: "Payment",
+      label: "Payment By",
       type: "select",
       sortable: true,
       filterable: true,
@@ -116,20 +116,22 @@ export default function PaymentTrack({
           color: "#f59e0b",
           textColor: "#1f2937",
           icon: "💳",
+          iconType: "emoji",
+          iconUrl: "",
         },
         {
           value: "paypal",
-          label: "Paypal",
-          color: "#3b82f6",
-          textColor: "#ffffff",
-          icon: "🅿️",
+          label: "",
+          icon: "/icons/paypal.png",
+          iconType: "image",
+          iconUrl: "/icons/paypal.png",
         },
         {
           value: "stripe",
-          label: "Stripe",
-          color: "#8b5cf6",
-          textColor: "#ffffff",
-          icon: "💜",
+          label: "",
+          icon: "/icons/stripe.png",
+          iconType: "image",
+          iconUrl: "/icons/stripe.png",
         },
         {
           value: "bank_transfer",
@@ -137,13 +139,17 @@ export default function PaymentTrack({
           color: "#16a34a",
           textColor: "#ffffff",
           icon: "🏦",
+          iconType: "emoji",
+          iconUrl: "",
         },
         {
           value: "cash_on_delivery",
-          label: "Cash On",
+          label: "Cash On Delivery",
           color: "#ef4444",
           textColor: "#ffffff",
           icon: "💵",
+          iconType: "emoji",
+          iconUrl: "",
         },
       ],
     },
@@ -159,37 +165,38 @@ export default function PaymentTrack({
         {
           value: "pending",
           label: "Pending",
-          color: "#ECFDF3",
-          textColor: "#027A48",
-          icon: "⏳",
-        },
-        {
-          value: "completed",
-          label: "Completed",
-          color: "#10b981",
-          textColor: "#ffffff",
-          icon: "✅",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
         },
         {
           value: "paid",
           label: "Paid",
-          color: "#16a34a",
-          textColor: "#ffffff",
-          icon: "✅",
+          color: "#ECFDF3",
+          textColor: "#027A48",
         },
         {
           value: "failed",
           label: "Failed",
-          color: "#ef4444",
-          textColor: "#ffffff",
-          icon: "❌",
+          color: "#FEF3F2",
+          textColor: "#B42318",
         },
         {
           value: "refunded",
           label: "Refunded",
-          color: "#6b7280",
-          textColor: "#ffffff",
-          icon: "↩️",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
         },
       ],
     },
@@ -206,14 +213,46 @@ export default function PaymentTrack({
       width: "60px",
       align: "center",
       options: [
-        { value: "credit_card", label: "Credit Card", color: "#f59e0b" },
-        { value: "paypal", label: "Paypal", color: "#3b82f6" },
-        { value: "stripe", label: "Stripe", color: "#8b5cf6" },
-        { value: "bank_transfer", label: "Bank Transfer", color: "#16a34a" },
+        {
+          value: "credit_card",
+          label: "Credit Card",
+          color: "#f59e0b",
+          textColor: "#1f2937",
+          icon: "💳",
+          iconType: "emoji",
+          iconUrl: "",
+        },
+        {
+          value: "paypal",
+          label: "Paypal",
+          icon: "/icons/paypal.png",
+          iconType: "image",
+          iconUrl: "/icons/paypal.png",
+        },
+        {
+          value: "stripe",
+          label: "Stripe",
+          icon: "/icons/stripe.png",
+          iconType: "image",
+          iconUrl: "/icons/stripe.png",
+        },
+        {
+          value: "bank_transfer",
+          label: "Bank Transfer",
+          color: "#16a34a",
+          textColor: "#ffffff",
+          icon: "🏦",
+          iconType: "emoji",
+          iconUrl: "",
+        },
         {
           value: "cash_on_delivery",
           label: "Cash On Delivery",
           color: "#ef4444",
+          textColor: "#ffffff",
+          icon: "💵",
+          iconType: "emoji",
+          iconUrl: "",
         },
       ],
     },
@@ -222,22 +261,42 @@ export default function PaymentTrack({
       label: "Payment Status",
       type: "select",
       options: [
-        { value: "pending", label: "Pending" },
-        { value: "paid", label: "Paid" },
-        { value: "failed", label: "Failed" },
-        { value: "refunded", label: "Refunded" },
-      ],
-    },
-    {
-      key: "paymentMethod",
-      label: "Payment Method",
-      type: "select",
-      options: [
-        { value: "credit_card", label: "Credit Card" },
-        { value: "paypal", label: "PayPal" },
-        { value: "stripe", label: "Stripe" },
-        { value: "bank_transfer", label: "Bank Transfer" },
-        { value: "cash_on_delivery", label: "Cash on Delivery" },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "paid",
+          label: "Paid",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "failed",
+          label: "Failed",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "refunded",
+          label: "Refunded",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "completed",
+          label: "Completed",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "cancelled",
+          label: "Cancelled",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
       ],
     },
   ];
@@ -246,7 +305,7 @@ export default function PaymentTrack({
   const bookOrderTableConfig: TableConfig = {
     title: "",
     description: "",
-    searchPlaceholder: "Search orders by ID, customer, or book name",
+    searchPlaceholder: "Search orders by book name",
     itemsPerPage: itemsPerPage,
     enableSearch: true,
     enableFilters: true,
@@ -330,13 +389,12 @@ export default function PaymentTrack({
   };
 
   return (
-    <div className="w-full mx-auto">
-      <StatsCard metrics={orderMetrics} />
-      <div className="w-full flex justify-between items-center my-5">
-        <h2 className="text-foreground text-xl font-semibold">{title}</h2>
-      </div>
-
+    <div className='w-full mx-auto'>
+      <div className='h-3'></div>
+      <StatsCard metrics={orderStatusStats} />
+      <div className='h-5'></div>
       <DynamicTable
+        title={title}
         data={bookOrders}
         columns={bookOrderColumns}
         filters={bookOrderFilters}

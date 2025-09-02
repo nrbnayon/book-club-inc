@@ -8,8 +8,8 @@ import { defaultMetrics } from "@/data/statsCardDataSets";
 export default function OverviewPage() {
   return (
     <div>
-      <DashboardHeader title="Welcome  Nayon" />
-      <div className="p-2 md:p-6 space-y-4 md:space-y-10">
+      <DashboardHeader title='Welcome  Nayon' />
+      <div className='p-2 md:p-5 space-y-4 md:space-y-10'>
         <StatsCard metrics={defaultMetrics} />
         <AnalyticsChart />
         <UserManagement />

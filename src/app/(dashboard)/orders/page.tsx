@@ -5,13 +5,16 @@ import BooksOrdersManage from "../components/BooksOrders/BooksOrdersManage";
 export default function ManageBookOrdersPage() {
   return (
     <div>
-      <DashboardHeader title="Welcome Nayon" />
-      <div className="p-2 md:p-6">
+      <DashboardHeader
+        title='All Orders'
+        subtitle='Track, manage and forecast your customers and orders.'
+      />
+      <div className='p-2 md:p-5'>
         <BooksOrdersManage
           itemsPerPage={20}
-          title="All Book Orders"
-          buttonText=""
-          pageUrl=""
+          title='All Order History'
+          buttonText=''
+          pageUrl=''
         />
       </div>
     </div>

@@ -13,6 +13,8 @@ import type {
 } from "@/types/dynamicTableTypes";
 import { DynamicTable } from "@/components/common/DynamicTable";
 import Lordicon from "@/components/lordicon/lordicon-wrapper";
+import StatsCard from "@/components/common/StatsCard";
+import { userStats } from "@/data/statsCardDataSets";
 
 interface UserManagementProps {
   itemsPerPage?: number;
@@ -25,7 +27,7 @@ export default function UserSubscriptions({
   itemsPerPage = 10,
   title = "Subscription user list",
   buttonText = "Show all",
-  pageUrl = "/users-subscription",
+  pageUrl = "/subscribe",
 }: UserManagementProps) {
   const [users, setUsers] = useState<GenericDataItem[]>(
     usersData as GenericDataItem[]
@@ -53,21 +55,41 @@ export default function UserSubscriptions({
     },
     {
       key: "status",
-      label: "Status",
+      label: "User Status",
       type: "select",
       sortable: true,
       filterable: true,
       width: "100px",
       align: "center",
       options: [
-        { value: "active", label: "Active", color: "#16a34a" },
-        { value: "inactive", label: "Inactive", color: "#ca8a04" },
-        { value: "blocked", label: "Blocked", color: "#dc2626" },
-        { value: "pending", label: "Pending", color: "#6b7280" },
+        {
+          value: "active",
+          label: "Active",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "inactive",
+          label: "Inactive",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "blocked",
+          label: "Blocked",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
       ],
     },
     {
-      key: "accountType",
+      key: "subscriptionType",
       label: "Subscription Status",
       type: "select",
       sortable: true,
@@ -75,10 +97,30 @@ export default function UserSubscriptions({
       width: "100px",
       align: "center",
       options: [
-        { value: "free", label: "Free", color: "#9ca3af" },
-        { value: "basic", label: "Basic", color: "#10b981" },
-        { value: "premium", label: "Premium", color: "#f59e0b" },
-        { value: "enterprise", label: "Enterprise", color: "#1e40af" },
+        {
+          value: "free",
+          label: "Free",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "basic",
+          label: "Basic",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "premium",
+          label: "Premium",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "enterprise",
+          label: "Enterprise",
+          color: "#DBEAFE",
+          textColor: "#1E3A8A",
+        },
       ],
     },
   ];
@@ -204,26 +246,32 @@ export default function UserSubscriptions({
       section: "account",
       gridCol: "half",
       options: [
-        { value: "active", label: "Active" },
-        { value: "inactive", label: "Inactive" },
-        { value: "blocked", label: "Blocked" },
-        { value: "pending", label: "Pending" },
+        {
+          value: "active",
+          label: "Active",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "inactive",
+          label: "Inactive",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "blocked",
+          label: "Blocked",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
       ],
     },
-    // {
-    //   key: "accountType",
-    //   label: "User Subscription Status",
-    //   type: "select",
-    //   required: true,
-    //   section: "account",
-    //   gridCol: "half",
-    //   options: [
-    //     { value: "free", label: "Free" },
-    //     { value: "basic", label: "Basic" },
-    //     { value: "premium", label: "Premium" },
-    //     { value: "enterprise", label: "Enterprise" },
-    //   ],
-    // },
   ];
 
   // Filter Configuration for User Table
@@ -233,21 +281,61 @@ export default function UserSubscriptions({
       label: "Status",
       type: "select",
       options: [
-        { value: "active", label: "Active" },
-        { value: "inactive", label: "Inactive" },
-        { value: "blocked", label: "Blocked" },
-        { value: "pending", label: "Pending" },
+        {
+          value: "active",
+          label: "Active",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "inactive",
+          label: "Inactive",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "blocked",
+          label: "Blocked",
+          color: "#FEF3F2",
+          textColor: "#B42318",
+        },
+        {
+          value: "pending",
+          label: "Pending",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
       ],
     },
     {
-      key: "accountType",
+      key: "subscriptionType",
       label: "Subscriptions",
       type: "select",
       options: [
-        { value: "free", label: "Free" },
-        { value: "basic", label: "Basic" },
-        { value: "premium", label: "Premium" },
-        { value: "enterprise", label: "Enterprise" },
+        {
+          value: "free",
+          label: "Free",
+          color: "#F3F4F6",
+          textColor: "#374151",
+        },
+        {
+          value: "basic",
+          label: "Basic",
+          color: "#ECFDF3",
+          textColor: "#027A48",
+        },
+        {
+          value: "premium",
+          label: "Premium",
+          color: "#FFF9E0",
+          textColor: "#C8AA00",
+        },
+        {
+          value: "enterprise",
+          label: "Enterprise",
+          color: "#DBEAFE",
+          textColor: "#1E3A8A",
+        },
       ],
     },
   ];
@@ -259,8 +347,8 @@ export default function UserSubscriptions({
       label: "",
       icon: (
         <Lordicon
-          src="https://cdn.lordicon.com/knitbwfa.json"
-          trigger="hover"
+          src='https://cdn.lordicon.com/knitbwfa.json'
+          trigger='hover'
           size={20}
           colors={{
             primary: "#9ca3af",
@@ -273,22 +361,22 @@ export default function UserSubscriptions({
       onClick: (item) => console.log("View user:", item.name),
     },
     {
-      key: "edit",
-      label: "Edit",
+      key: "delete",
+      label: "",
       icon: (
         <Lordicon
-          src="https://cdn.lordicon.com/cbtlerlm.json" //cbtlerlm
-          trigger="hover"
+          src='https://cdn.lordicon.com/jmkrnisz.json'
+          trigger='hover'
           size={20}
           colors={{
-            primary: "",
-            secondary: "",
+            primary: "#FF0000",
+            secondary: "#ffffff",
           }}
           stroke={4}
         />
       ),
       variant: "ghost",
-      onClick: (item) => console.log("Edit user:", item.name),
+      onClick: (item) => console.log("Delete order:", item.orderId),
     },
   ];
 
@@ -400,7 +488,10 @@ export default function UserSubscriptions({
   };
 
   return (
-    <div className="mx-auto">
+    <div className='mx-auto'>
+      <div className='h-3'></div>
+      <StatsCard metrics={userStats} />
+      <div className='h-5'></div>
       <DynamicTable
         data={users}
         columns={userColumns}

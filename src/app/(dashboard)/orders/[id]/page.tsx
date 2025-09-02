@@ -205,10 +205,10 @@ export default function OrderDetailsPage() {
   if (loading) {
     return (
       <div>
-        <DashboardHeader title="Order Details" />
-        <div className="p-2 md:p-6">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <DashboardHeader title='Order Details' />
+        <div className='p-2 md:p-5'>
+          <div className='flex items-center justify-center min-h-[400px]'>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900'></div>
           </div>
         </div>
       </div>
@@ -218,22 +218,22 @@ export default function OrderDetailsPage() {
   if (!order) {
     return (
       <div>
-        <DashboardHeader title="Order Not Found" />
-        <div className="p-2 md:p-6">
-          <div className="text-center py-12">
-            <PackageIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        <DashboardHeader title='Order Not Found' />
+        <div className='p-2 md:p-5'>
+          <div className='text-center py-12'>
+            <PackageIcon className='h-16 w-16 text-gray-400 mx-auto mb-4' />
+            <h2 className='text-2xl font-semibold text-gray-900 mb-2'>
               Order Not Found
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className='text-gray-600 mb-6'>
               The order you&apos;re looking for doesn&apos;t exist or may have
               been removed.
             </p>
             <Button
               onClick={() => router.push("/orders")}
-              className="flex items-center gap-2"
+              className='flex items-center gap-2'
             >
-              <ArrowLeftIcon className="h-4 w-4" />
+              <ArrowLeftIcon className='h-4 w-4' />
               Back to Orders List
             </Button>
           </div>
@@ -244,49 +244,49 @@ export default function OrderDetailsPage() {
 
   return (
     <div>
-      <div className="p-6 border-b">
-        <h1 className="text-3xl font-bold text-[#0F304E] dark:text-white">
+      <div className='p-6 border-b'>
+        <h1 className='text-3xl font-bold text-[#0F304E] dark:text-white'>
           Order Details
         </h1>
       </div>
-      <div className="p-2 md:p-6 w-full mx-auto">
+      <div className='p-2 md:p-5 w-full mx-auto'>
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className='mb-6'>
+          <div className='flex items-center justify-between mb-4'>
             <div>
-              <div className="flex items-center gap-2 text-sm text-gray-500 ml-5">
-                <Link href="/orders">Orders</Link>
+              <div className='flex items-center gap-2 text-sm text-gray-500 ml-5'>
+                <Link href='/orders'>Orders</Link>
                 <span>/</span>
                 <span>Order Details</span>
                 <span>/</span>
-                <span className="font-medium">{order.orderId}</span>
+                <span className='font-medium'>{order.orderId}</span>
               </div>
             </div>
             <Button
-              variant="outline"
+              variant='outline'
               onClick={() => router.push("/orders")}
-              className="flex items-center gap-2"
+              className='flex items-center gap-2'
             >
-              <ArrowLeftIcon className="h-4 w-4" />
+              <ArrowLeftIcon className='h-4 w-4' />
               Back to Orders List
             </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
           {/* Left Column - Customer & Order Info */}
-          <div className="xl:col-span-1 space-y-6">
+          <div className='xl:col-span-1 space-y-6'>
             {/* Customer Information */}
-            <Card className="text-center">
+            <Card className='text-center'>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <UserIcon className="h-5 w-5" />
+                <CardTitle className='text-lg flex items-center gap-2'>
+                  <UserIcon className='h-5 w-5' />
                   Customer Information
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col items-center gap-4 mb-4">
-                  <Avatar className="h-28 w-28">
+                <div className='flex flex-col items-center gap-4 mb-4'>
+                  <Avatar className='h-28 w-28'>
                     <AvatarImage
                       src={order.customerAvatar}
                       alt={order.customer}
@@ -299,27 +299,27 @@ export default function OrderDetailsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="text-lg font-semibold">{order.customer}</h3>
-                    <p className="text-sm text-gray-600">
+                    <h3 className='text-lg font-semibold'>{order.customer}</h3>
+                    <p className='text-sm text-gray-600'>
                       {order.customerEmail}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex flex-col justify-between items-center gap-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <CalendarIcon className="h-4 w-4 text-gray-500" />
-                    <span className="text-gray-600">Order Date:</span>
-                    <span className="font-medium">
+                <div className='flex flex-col justify-between items-center gap-3'>
+                  <div className='flex items-center gap-2 text-sm'>
+                    <CalendarIcon className='h-4 w-4 text-gray-500' />
+                    <span className='text-gray-600'>Order Date:</span>
+                    <span className='font-medium'>
                       {formatDate(order.orderDate)}
                     </span>
                   </div>
 
                   {order.deliveryDate && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <PackageIcon className="h-4 w-4 text-gray-500" />
-                      <span className="text-gray-600">Delivered:</span>
-                      <span className="font-medium">
+                    <div className='flex items-center gap-2 text-sm'>
+                      <PackageIcon className='h-4 w-4 text-gray-500' />
+                      <span className='text-gray-600'>Delivered:</span>
+                      <span className='font-medium'>
                         {formatDate(order.deliveryDate)}
                       </span>
                     </div>
@@ -331,14 +331,14 @@ export default function OrderDetailsPage() {
             {/* Order Status */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <PackageIcon className="h-5 w-5" />
+                <CardTitle className='text-lg flex items-center gap-2'>
+                  <PackageIcon className='h-5 w-5' />
                   Order Status
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">
+              <CardContent className='space-y-4'>
+                <div className='flex justify-between items-center'>
+                  <span className='text-sm font-medium text-gray-600'>
                     Order Status
                   </span>
                   <Badge
@@ -348,8 +348,8 @@ export default function OrderDetailsPage() {
                   </Badge>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">
+                <div className='flex justify-between items-center'>
+                  <span className='text-sm font-medium text-gray-600'>
                     Payment Status
                   </span>
                   <Badge
@@ -363,22 +363,22 @@ export default function OrderDetailsPage() {
 
                 <Separator />
 
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">
+                <div className='flex justify-between items-center'>
+                  <span className='text-sm font-medium text-gray-600'>
                     Payment Method
                   </span>
-                  <span className="text-sm font-medium flex items-center gap-2">
-                    <CreditCardIcon className="h-4 w-4" />
+                  <span className='text-sm font-medium flex items-center gap-2'>
+                    <CreditCardIcon className='h-4 w-4' />
                     {formatPaymentMethod(order.paymentMethod)}
                   </span>
                 </div>
 
                 {order.trackingNumber && (
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-600">
+                  <div className='flex justify-between items-center'>
+                    <span className='text-sm font-medium text-gray-600'>
                       Tracking Number
                     </span>
-                    <span className="text-sm font-mono font-medium bg-gray-100 px-2 py-1 rounded">
+                    <span className='text-sm font-mono font-medium bg-gray-100 px-2 py-1 rounded'>
                       {order.trackingNumber}
                     </span>
                   </div>
@@ -389,13 +389,13 @@ export default function OrderDetailsPage() {
             {/* Shipping Address */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <MapPinIcon className="h-5 w-5" />
+                <CardTitle className='text-lg flex items-center gap-2'>
+                  <MapPinIcon className='h-5 w-5' />
                   Shipping Address
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className='text-sm text-gray-700 leading-relaxed'>
                   {order.shippingAddress}
                 </p>
               </CardContent>
@@ -405,10 +405,10 @@ export default function OrderDetailsPage() {
             {order.notes && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Order Notes</CardTitle>
+                  <CardTitle className='text-lg'>Order Notes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className='text-sm text-gray-700 leading-relaxed'>
                     {order.notes}
                   </p>
                 </CardContent>
@@ -417,64 +417,64 @@ export default function OrderDetailsPage() {
           </div>
 
           {/* Right Column - Book Details & Order Summary */}
-          <div className="xl:col-span-2 space-y-6">
+          <div className='xl:col-span-2 space-y-6'>
             {/* Book Details */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <BookOpenIcon className="h-5 w-5" />
+                <CardTitle className='text-lg flex items-center gap-2'>
+                  <BookOpenIcon className='h-5 w-5' />
                   Book Details
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   {/* Book Information */}
-                  <div className="space-y-4">
+                  <div className='space-y-4'>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 ">
+                      <h2 className='text-2xl font-bold text-gray-900 '>
                         {order.bookName}
                       </h2>
-                      <p className="text-lg text-gray-600 mb-4">
+                      <p className='text-lg text-gray-600 mb-4'>
                         by {order.author}
                       </p>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                          <HashIcon className="h-4 w-4" />
+                    <div className='space-y-3'>
+                      <div className='flex items-center justify-between py-2 border-b border-gray-100'>
+                        <span className='text-sm font-medium text-gray-600 flex items-center gap-2'>
+                          <HashIcon className='h-4 w-4' />
                           ISBN
                         </span>
-                        <span className="text-sm font-medium font-mono">
+                        <span className='text-sm font-medium font-mono'>
                           {order.isbn}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                          <PackageIcon className="h-4 w-4" />
+                      <div className='flex items-center justify-between py-2 border-b border-gray-100'>
+                        <span className='text-sm font-medium text-gray-600 flex items-center gap-2'>
+                          <PackageIcon className='h-4 w-4' />
                           Quantity
                         </span>
-                        <span className="text-sm font-medium">
+                        <span className='text-sm font-medium'>
                           {order.quantity}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                          <DollarSignIcon className="h-4 w-4" />
+                      <div className='flex items-center justify-between py-2 border-b border-gray-100'>
+                        <span className='text-sm font-medium text-gray-600 flex items-center gap-2'>
+                          <DollarSignIcon className='h-4 w-4' />
                           Unit Price
                         </span>
-                        <span className="text-sm font-medium">
+                        <span className='text-sm font-medium'>
                           ${order.price.toFixed(2)}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between py-3 bg-gray-50 px-4 rounded-lg">
-                        <span className="text-base font-semibold text-gray-900">
+                      <div className='flex items-center justify-between py-3 bg-gray-50 px-4 rounded-lg'>
+                        <span className='text-base font-semibold text-gray-900'>
                           Total Amount
                         </span>
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className='text-xl font-bold text-gray-900'>
                           ${order.totalAmount.toFixed(2)}
                         </span>
                       </div>
@@ -483,23 +483,23 @@ export default function OrderDetailsPage() {
 
                   {/* Book Cover */}
                   <div>
-                    <div className="flex justify-center md:justify-center">
-                      <div className="w-52 h-64 relative">
+                    <div className='flex justify-center md:justify-center'>
+                      <div className='w-52 h-64 relative'>
                         <Image
                           src={order.bookCover || ""}
                           alt={order.bookName}
                           fill
                           priority
-                          className="object-cover rounded-lg shadow-lg"
+                          className='object-cover rounded-lg shadow-lg'
                         />
                       </div>
                     </div>
                     {/* Book Description */}
-                    <div className="mt-6">
-                      <h3 className="text-base font-semibold text-gray-900 mb-3">
+                    <div className='mt-6'>
+                      <h3 className='text-base font-semibold text-gray-900 mb-3'>
                         Description
                       </h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className='text-sm text-gray-600 leading-relaxed'>
                         {order.notes ||
                           `${order.bookName} is a compelling read that offers valuable insights and engaging content. This book provides readers with thoughtful perspectives and practical knowledge that can be applied in various contexts. A must-read for anyone interested in the subject matter.`}
                       </p>
@@ -512,8 +512,8 @@ export default function OrderDetailsPage() {
             {/* Order Summary Card */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <HashIcon className="h-5 w-5" />
+                <CardTitle className='text-lg flex items-center gap-2'>
+                  <HashIcon className='h-5 w-5' />
                   Order Summary
                 </CardTitle>
                 <CardDescription>
@@ -522,43 +522,43 @@ export default function OrderDetailsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   {/* Order Information */}
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">
+                  <div className='space-y-4'>
+                    <h4 className='font-semibold text-gray-900'>
                       Order Information
                     </h4>
 
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">Order ID</span>
-                        <span className="text-sm font-medium font-mono">
+                    <div className='space-y-3'>
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>Order ID</span>
+                        <span className='text-sm font-medium font-mono'>
                           {order.orderId}
                         </span>
                       </div>
 
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>
                           Order Date
                         </span>
-                        <span className="text-sm font-medium">
+                        <span className='text-sm font-medium'>
                           {formatDate(order.orderDate)}
                         </span>
                       </div>
 
                       {order.deliveryDate && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">
+                        <div className='flex justify-between'>
+                          <span className='text-sm text-gray-600'>
                             Delivery Date
                           </span>
-                          <span className="text-sm font-medium">
+                          <span className='text-sm font-medium'>
                             {formatDate(order.deliveryDate)}
                           </span>
                         </div>
                       )}
 
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">Status</span>
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>Status</span>
                         <Badge
                           className={`${getStatusColor(
                             order.status
@@ -571,23 +571,23 @@ export default function OrderDetailsPage() {
                   </div>
 
                   {/* Payment Information */}
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">
+                  <div className='space-y-4'>
+                    <h4 className='font-semibold text-gray-900'>
                       Payment Information
                     </h4>
 
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">
+                    <div className='space-y-3'>
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>
                           Payment Method
                         </span>
-                        <span className="text-sm font-medium">
+                        <span className='text-sm font-medium'>
                           {formatPaymentMethod(order.paymentMethod)}
                         </span>
                       </div>
 
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>
                           Payment Status
                         </span>
                         <Badge
@@ -599,23 +599,23 @@ export default function OrderDetailsPage() {
                         </Badge>
                       </div>
 
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">Subtotal</span>
-                        <span className="text-sm font-medium">
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>Subtotal</span>
+                        <span className='text-sm font-medium'>
                           ${(order.quantity * order.price).toFixed(2)}
                         </span>
                       </div>
 
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-600">Shipping</span>
-                        <span className="text-sm font-medium">Free</span>
+                      <div className='flex justify-between'>
+                        <span className='text-sm text-gray-600'>Shipping</span>
+                        <span className='text-sm font-medium'>Free</span>
                       </div>
 
                       <Separator />
 
-                      <div className="flex justify-between">
-                        <span className="text-base font-semibold">Total</span>
-                        <span className="text-lg font-bold">
+                      <div className='flex justify-between'>
+                        <span className='text-base font-semibold'>Total</span>
+                        <span className='text-lg font-bold'>
                           ${order.totalAmount.toFixed(2)}
                         </span>
                       </div>
@@ -627,34 +627,34 @@ export default function OrderDetailsPage() {
 
             {/* Action Buttons */}
             {canModifyOrder() && (
-              <div className="w-full flex items-center justify-end gap-3">
+              <div className='w-full flex items-center justify-end gap-3'>
                 <Button
-                  variant="outline"
+                  variant='outline'
                   onClick={handleDeclineOrder}
-                  className="flex items-center gap-2 text-red-600 border-red-200 hover:bg-red-50"
+                  className='flex items-center gap-2 text-red-600 border-red-200 hover:bg-red-50'
                   disabled={processing}
                 >
-                  <XCircleIcon className="h-4 w-4" />
+                  <XCircleIcon className='h-4 w-4' />
                   Decline Order
                 </Button>
                 <Button
                   onClick={handleApproveOrder}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                  className='flex items-center gap-2 bg-green-600 hover:bg-green-700'
                   disabled={processing}
                 >
-                  <CheckCircleIcon className="h-4 w-4" />
+                  <CheckCircleIcon className='h-4 w-4' />
                   Approve Order
                 </Button>
               </div>
             )}
 
             {!canModifyOrder() && (
-              <div className="w-full">
-                <Card className="border-amber-200 bg-amber-50">
-                  <CardContent className="py-6">
-                    <div className="flex items-center gap-2 text-amber-800">
-                      <AlertTriangleIcon className="h-5 w-5" />
-                      <span className="text-sm font-medium">
+              <div className='w-full'>
+                <Card className='border-amber-200 bg-amber-50'>
+                  <CardContent className='py-6'>
+                    <div className='flex items-center gap-2 text-amber-800'>
+                      <AlertTriangleIcon className='h-5 w-5' />
+                      <span className='text-sm font-medium'>
                         This order cannot be modified as it has already been{" "}
                         {order.status.toLowerCase()}.
                       </span>
@@ -668,10 +668,10 @@ export default function OrderDetailsPage() {
 
         {/* Approval Modal */}
         <Dialog open={showApprovalModal} onOpenChange={setShowApprovalModal}>
-          <DialogContent className="sm:max-w-[500px]">
+          <DialogContent className='sm:max-w-[500px]'>
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-green-700">
-                <CheckCircleIcon className="h-5 w-5" />
+              <DialogTitle className='flex items-center gap-2 text-green-700'>
+                <CheckCircleIcon className='h-5 w-5' />
                 Approve Order #{order.orderId}
               </DialogTitle>
               <DialogDescription>
@@ -680,36 +680,36 @@ export default function OrderDetailsPage() {
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="approval-notes">
+            <div className='space-y-4 py-4'>
+              <div className='space-y-2'>
+                <Label htmlFor='approval-notes'>
                   Approval Notes (Optional)
                 </Label>
                 <Textarea
-                  id="approval-notes"
-                  placeholder="Add any notes about this approval..."
+                  id='approval-notes'
+                  placeholder='Add any notes about this approval...'
                   value={approvalNotes}
                   onChange={(e) => setApprovalNotes(e.target.value)}
                   rows={3}
                 />
               </div>
 
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 mb-2">
+              <div className='bg-green-50 border border-green-200 rounded-lg p-4'>
+                <h4 className='font-medium text-green-800 mb-2'>
                   Order Summary
                 </h4>
-                <div className="text-sm text-green-700 space-y-1">
-                  <div className="flex justify-between">
+                <div className='text-sm text-green-700 space-y-1'>
+                  <div className='flex justify-between'>
                     <span>Customer:</span>
-                    <span className="font-medium">{order.customer}</span>
+                    <span className='font-medium'>{order.customer}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className='flex justify-between'>
                     <span>Book:</span>
-                    <span className="font-medium">{order.bookName}</span>
+                    <span className='font-medium'>{order.bookName}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className='flex justify-between'>
                     <span>Total Amount:</span>
-                    <span className="font-medium">
+                    <span className='font-medium'>
                       ${order.totalAmount.toFixed(2)}
                     </span>
                   </div>
@@ -719,14 +719,14 @@ export default function OrderDetailsPage() {
 
             <DialogFooter>
               <Button
-                variant="outline"
+                variant='outline'
                 onClick={() => setShowApprovalModal(false)}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleConfirmAction}
-                className="bg-green-600 hover:bg-green-700"
+                className='bg-green-600 hover:bg-green-700'
               >
                 Continue to Approve
               </Button>
@@ -736,10 +736,10 @@ export default function OrderDetailsPage() {
 
         {/* Decline Modal */}
         <Dialog open={showDeclineModal} onOpenChange={setShowDeclineModal}>
-          <DialogContent className="sm:max-w-[500px]">
+          <DialogContent className='sm:max-w-[500px]'>
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-red-700">
-                <XCircleIcon className="h-5 w-5" />
+              <DialogTitle className='flex items-center gap-2 text-red-700'>
+                <XCircleIcon className='h-5 w-5' />
                 Decline Order #{order.orderId}
               </DialogTitle>
               <DialogDescription>
@@ -748,12 +748,12 @@ export default function OrderDetailsPage() {
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="decline-reason">Reason for Decline *</Label>
+            <div className='space-y-4 py-4'>
+              <div className='space-y-2'>
+                <Label htmlFor='decline-reason'>Reason for Decline *</Label>
                 <Textarea
-                  id="decline-reason"
-                  placeholder="Please provide a reason for declining this order..."
+                  id='decline-reason'
+                  placeholder='Please provide a reason for declining this order...'
                   value={declineReason}
                   onChange={(e) => setDeclineReason(e.target.value)}
                   rows={3}
@@ -761,20 +761,20 @@ export default function OrderDetailsPage() {
                 />
               </div>
 
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 mb-2">Order Summary</h4>
-                <div className="text-sm text-red-700 space-y-1">
-                  <div className="flex justify-between">
+              <div className='bg-red-50 border border-red-200 rounded-lg p-4'>
+                <h4 className='font-medium text-red-800 mb-2'>Order Summary</h4>
+                <div className='text-sm text-red-700 space-y-1'>
+                  <div className='flex justify-between'>
                     <span>Customer:</span>
-                    <span className="font-medium">{order.customer}</span>
+                    <span className='font-medium'>{order.customer}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className='flex justify-between'>
                     <span>Book:</span>
-                    <span className="font-medium">{order.bookName}</span>
+                    <span className='font-medium'>{order.bookName}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className='flex justify-between'>
                     <span>Total Amount:</span>
-                    <span className="font-medium">
+                    <span className='font-medium'>
                       ${order.totalAmount.toFixed(2)}
                     </span>
                   </div>
@@ -784,14 +784,14 @@ export default function OrderDetailsPage() {
 
             <DialogFooter>
               <Button
-                variant="outline"
+                variant='outline'
                 onClick={() => setShowDeclineModal(false)}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleConfirmAction}
-                variant="destructive"
+                variant='destructive'
                 disabled={!declineReason.trim()}
               >
                 Continue to Decline
@@ -807,8 +807,8 @@ export default function OrderDetailsPage() {
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <AlertTriangleIcon className="h-5 w-5 text-amber-600" />
+              <AlertDialogTitle className='flex items-center gap-2'>
+                <AlertTriangleIcon className='h-5 w-5 text-amber-600' />
                 Confirm Action
               </AlertDialogTitle>
               <AlertDialogDescription>
@@ -818,18 +818,18 @@ export default function OrderDetailsPage() {
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 my-4">
-              <div className="text-sm space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Order:</span>
-                  <span className="font-medium">#{order.orderId}</span>
+            <div className='bg-gray-50 border border-gray-200 rounded-lg p-4 my-4'>
+              <div className='text-sm space-y-2'>
+                <div className='flex justify-between'>
+                  <span className='text-gray-600'>Order:</span>
+                  <span className='font-medium'>#{order.orderId}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Customer:</span>
-                  <span className="font-medium">{order.customer}</span>
+                <div className='flex justify-between'>
+                  <span className='text-gray-600'>Customer:</span>
+                  <span className='font-medium'>{order.customer}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Action:</span>
+                <div className='flex justify-between'>
+                  <span className='text-gray-600'>Action:</span>
                   <span
                     className={`font-medium ${
                       actionType === "approve"
@@ -841,17 +841,17 @@ export default function OrderDetailsPage() {
                   </span>
                 </div>
                 {actionType === "approve" && approvalNotes && (
-                  <div className="pt-2 border-t border-gray-200">
-                    <span className="text-gray-600 text-xs">Notes:</span>
-                    <p className="text-xs text-gray-700 mt-1">
+                  <div className='pt-2 border-t border-gray-200'>
+                    <span className='text-gray-600 text-xs'>Notes:</span>
+                    <p className='text-xs text-gray-700 mt-1'>
                       {approvalNotes}
                     </p>
                   </div>
                 )}
                 {actionType === "decline" && declineReason && (
-                  <div className="pt-2 border-t border-gray-200">
-                    <span className="text-gray-600 text-xs">Reason:</span>
-                    <p className="text-xs text-gray-700 mt-1">
+                  <div className='pt-2 border-t border-gray-200'>
+                    <span className='text-gray-600 text-xs'>Reason:</span>
+                    <p className='text-xs text-gray-700 mt-1'>
                       {declineReason}
                     </p>
                   </div>
@@ -874,7 +874,7 @@ export default function OrderDetailsPage() {
               >
                 {processing ? (
                   <>
-                    <LoaderIcon className="h-4 w-4 mr-2 animate-spin" />
+                    <LoaderIcon className='h-4 w-4 mr-2 animate-spin' />
                     Processing...
                   </>
                 ) : (
