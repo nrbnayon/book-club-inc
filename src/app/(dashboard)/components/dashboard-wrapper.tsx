@@ -414,8 +414,8 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                           className={cn(
                             "flex items-center gap-3 px-2 py-1 rounded-md transition-all duration-200 group flex-1 relative ",
                             isActive
-                              ? "bg-[#EAF3FF] dark:bg-primary text-foreground font-semibold shadow-md"
-                              : "text-black/80 hover:text-black hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
+                              ? "bg-[#EAF3FF] dark:bg-primary text-foreground  font-semibold shadow-md"
+                              : "text-black/80 hover:text-black hover:font-medium dark:text-white hover:bg-primary/15 dark:hover:bg-primary/40"
                           )}
                         >
                           <span className="flex-shrink-0 mt-1.5">
@@ -511,7 +511,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                     "flex items-center gap-3 px-2 py-1 rounded-lg transition-all duration-200",
                     pathname === "/profile"
                       ? "bg-primary/30 dark:bg-primary text-foreground font-semibold shadow-md"
-                      : "text-black/80 hover:text-black hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
+                      : "text-black/80 hover:text-black dark:text-white hover:font-medium hover:bg-primary/15 dark:hover:bg-primary/40"
                   )}
                 >
                   <Lordicon

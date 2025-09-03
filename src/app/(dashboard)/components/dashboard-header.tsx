@@ -19,7 +19,7 @@ export default function DashboardHeader({
       <div className="mx-auto">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl md:text-3xl font-bold text-[#0F304E] tracking-tight">
+            <h1 className="text-xl md:text-3xl font-bold text-[#0F304E] dark:text-white tracking-tight">
               {title}
             </h1>
             {subtitle && (

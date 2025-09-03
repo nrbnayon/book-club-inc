@@ -55,6 +55,11 @@ export default function BookManagement({
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-medium text-sm truncate">{String(value)}</p>
+            <p className="text-xs text-gray-500 truncate">
+              {typeof item.author_name === "string" && item.author_name
+                ? `by ${item.author_name}`
+                : "Unknown Author"}
+            </p>
             {typeof item.book_price === "string" && item.book_price && (
               <p className="text-xs text-green-600 font-semibold">
                 {item.book_price}
@@ -62,6 +67,28 @@ export default function BookManagement({
             )}
           </div>
         </div>
+      ),
+    },
+    {
+      key: "author_name",
+      label: "Author",
+      sortable: true,
+      searchable: true,
+      render: (value) => (
+        <span className="text-gray-700">
+          {typeof value === "string" ? value : "Unknown Author"}
+        </span>
+      ),
+    },
+    {
+      key: "category",
+      label: "Category",
+      sortable: true,
+      searchable: true,
+      render: (value) => (
+        <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+          {typeof value === "string" ? value : "Uncategorized"}
+        </span>
       ),
     },
     {
@@ -124,20 +151,36 @@ export default function BookManagement({
     titleKey: "book_name",
     imageKey: "image",
     descriptionKey: "description",
-    badgeKeys: ["book_price"],
+    badgeKeys: ["book_price", "category"],
     showDetailsButton: true,
   };
 
   // Search Filter Configuration
   const searchFilterConfig: SearchFilterConfig = {
-    searchPlaceholder: "Search books by name, description...",
-    searchKeys: ["book_name", "description"],
+    searchPlaceholder: "Search books by name, author, description...",
+    searchKeys: ["book_name", "author_name", "description", "category"],
     enableSort: true,
     sortOptions: [
       { key: "book_name", label: "Book Name" },
+      { key: "author_name", label: "Author Name" },
+      { key: "category", label: "Category" },
       { key: "book_price", label: "Price" },
     ],
     filters: [
+      {
+        key: "category",
+        label: "Category",
+        type: "select",
+        options: [
+          { value: "Classic Literature", label: "Classic Literature" },
+          { value: "Dystopian", label: "Dystopian" },
+          { value: "Romance", label: "Romance" },
+          { value: "Coming-of-Age", label: "Coming-of-Age" },
+          { value: "Gothic Romance", label: "Gothic Romance" },
+          { value: "Fantasy", label: "Fantasy" },
+          { value: "Adventure", label: "Adventure" },
+        ],
+      },
       {
         key: "has_pdf",
         label: "PDF Available",
@@ -195,6 +238,14 @@ export default function BookManagement({
   // Form Fields Configuration
   const createFormFields: FormField[] = [
     {
+      key: "image",
+      label: "Book Cover Image",
+      type: "image",
+      required: true,
+      section: "media",
+      gridCol: "full",
+    },
+    {
       key: "book_name",
       label: "Book Name",
       type: "text",
@@ -205,7 +256,52 @@ export default function BookManagement({
         maxLength: 200,
       },
       section: "basic",
-      gridCol: "full",
+      gridCol: "third",
+    },
+    {
+      key: "author_name",
+      label: "Author Name",
+      type: "text",
+      required: true,
+      placeholder: "Enter author name",
+      validation: {
+        minLength: 2,
+        maxLength: 100,
+      },
+      section: "basic",
+      gridCol: "half",
+    },
+    {
+      key: "category",
+      label: "Category",
+      type: "text",
+      required: true,
+      placeholder: "Enter category",
+      options: [
+        { value: "Classic Literature", label: "Classic Literature" },
+        { value: "Dystopian", label: "Dystopian" },
+        { value: "Romance", label: "Romance" },
+        { value: "Coming-of-Age", label: "Coming-of-Age" },
+        { value: "Gothic Romance", label: "Gothic Romance" },
+        { value: "Fantasy", label: "Fantasy" },
+        { value: "Adventure", label: "Adventure" },
+        { value: "Science Fiction", label: "Science Fiction" },
+        { value: "Mystery", label: "Mystery" },
+        { value: "Thriller", label: "Thriller" },
+        { value: "Biography", label: "Biography" },
+        { value: "Non-Fiction", label: "Non-Fiction" },
+      ],
+      section: "basic",
+      gridCol: "half",
+    },
+    {
+      key: "book_price",
+      label: "Book Price",
+      type: "text",
+      required: false,
+      placeholder: "$9.99",
+      section: "basic",
+      gridCol: "third",
     },
     {
       key: "description",
@@ -215,23 +311,6 @@ export default function BookManagement({
       placeholder: "Enter book description...",
       section: "basic",
       gridCol: "full",
-    },
-    {
-      key: "image",
-      label: "Book Cover Image",
-      type: "image",
-      required: true,
-      section: "basic",
-      gridCol: "full",
-    },
-    {
-      key: "book_price",
-      label: "Book Price",
-      type: "text",
-      required: false,
-      placeholder: "$9.99",
-      section: "details",
-      gridCol: "half",
     },
     {
       key: "book_pdf",
@@ -247,15 +326,22 @@ export default function BookManagement({
   // Form Sections
   const createModalSections = [
     {
+      key: "media",
+      title: "Book Cover",
+      description: "Upload or provide book cover image",
+      icon: "🖼️",
+    },
+    {
       key: "basic",
       title: "Basic Information",
       description: "Enter the basic details for the book",
       icon: "📚",
     },
+
     {
       key: "details",
-      title: "Book Details",
-      description: "Add pricing and PDF information",
+      title: "Additional File",
+      description: "",
       icon: "💰",
     },
   ];
@@ -280,6 +366,8 @@ export default function BookManagement({
     const newBookData: BookDataItem = {
       id: generateId(),
       book_name: String(data.book_name || ""),
+      author_name: String(data.author_name || ""),
+      category: String(data.category || ""),
       description: String(data.description || ""),
       image:
         imageValue ||
@@ -315,6 +403,8 @@ export default function BookManagement({
     const updatedBookData: BookDataItem = {
       ...editingBook,
       book_name: String(data.book_name || ""),
+      author_name: String(data.author_name || ""),
+      category: String(data.category || ""),
       description: String(data.description || ""),
       image: imageValue,
       book_price: data.book_price ? String(data.book_price) : undefined,
@@ -347,6 +437,8 @@ export default function BookManagement({
     if (!editingBook) return {};
     return {
       book_name: editingBook.book_name || "",
+      author_name: editingBook.author_name || "",
+      category: editingBook.category || "",
       description: editingBook.description || "",
       image: editingBook.image || "",
       book_price: editingBook.book_price || "",
