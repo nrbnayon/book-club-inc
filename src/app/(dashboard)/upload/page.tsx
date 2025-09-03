@@ -1,4 +1,4 @@
-// src\app\(dashboard)\manage-post\page.tsx
+// src\app\(dashboard)\upload\page.tsx
 import DashboardHeader from "../components/dashboard-header";
 import ManagementPosts from "../components/UploadBook/BookManagement";
 

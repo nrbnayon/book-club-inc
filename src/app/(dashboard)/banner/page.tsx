@@ -1,4 +1,4 @@
-// src\app\(dashboard)\manage-ads\page.tsx
+// src\app\(dashboard)\banner\page.tsx
 import DashboardHeader from "../components/dashboard-header";
 import BannerManagement from "../components/AppBanner/BannerManagement";
 

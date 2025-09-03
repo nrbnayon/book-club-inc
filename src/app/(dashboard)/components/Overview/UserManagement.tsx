@@ -25,7 +25,7 @@ export default function UserManagement({
   itemsPerPage = 10,
   title = "Recently Joined Users",
   buttonText = "Show all",
-  pageUrl = "/manage-users",
+  pageUrl = "/users",
 }: UserManagementProps) {
   const [users, setUsers] = useState<GenericDataItem[]>(
     usersData as GenericDataItem[]
@@ -253,14 +253,14 @@ export default function UserManagement({
     {
       key: "view",
       label: "View",
-      icon: <Eye className='w-4 h-4' />,
+      icon: <Eye className="w-4 h-4" />,
       variant: "ghost",
       onClick: (item) => console.log("View user:", item.name),
     },
     {
       key: "edit",
       label: "Edit",
-      icon: <Edit className='w-4 h-4' />,
+      icon: <Edit className="w-4 h-4" />,
       variant: "ghost",
       onClick: (item) => console.log("Edit user:", item.name),
     },
@@ -374,7 +374,7 @@ export default function UserManagement({
   };
 
   return (
-    <div className='mx-auto'>
+    <div className="mx-auto">
       <DynamicTable
         data={users}
         columns={userColumns}
