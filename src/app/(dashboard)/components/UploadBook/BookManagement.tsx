@@ -39,8 +39,8 @@ export default function BookManagement({
       searchable: true,
       align: "left",
       render: (value, item) => (
-        <div className='flex items-center gap-3'>
-          <div className='w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0'>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
             <Image
               src={
                 typeof item.image === "string" && item.image
@@ -48,15 +48,15 @@ export default function BookManagement({
                   : "/placeholder.svg?height=48&width=48"
               }
               alt={String(value)}
-              className='w-full h-full object-cover'
+              className="w-full h-full object-cover"
               width={48}
               height={48}
             />
           </div>
-          <div className='min-w-0 flex-1'>
-            <p className='font-medium text-sm truncate'>{String(value)}</p>
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-sm truncate">{String(value)}</p>
             {typeof item.book_price === "string" && item.book_price && (
-              <p className='text-xs text-green-600 font-semibold'>
+              <p className="text-xs text-green-600 font-semibold">
                 {item.book_price}
               </p>
             )}
@@ -79,11 +79,11 @@ export default function BookManagement({
       render: (value) => {
         const imageUrl = typeof value === "string" ? value : "/placeholder.svg";
         return (
-          <div className='w-16 h-20 rounded overflow-hidden'>
+          <div className="w-16 h-20 rounded overflow-hidden">
             <Image
               src={imageUrl}
-              alt='Book cover'
-              className='w-full h-full object-cover'
+              alt="Book cover"
+              className="w-full h-full object-cover"
               width={64}
               height={80}
             />
@@ -96,7 +96,7 @@ export default function BookManagement({
       label: "Price",
       sortable: true,
       render: (value) => (
-        <span className='text-green-600 font-semibold'>
+        <span className="text-green-600 font-semibold">
           {typeof value === "string" ? value : "N/A"}
         </span>
       ),
@@ -157,10 +157,10 @@ export default function BookManagement({
       label: "Edit Book",
       icon: (
         <Lordicon
-          src='https://cdn.lordicon.com/cbtlerlm.json'
-          trigger='hover'
+          src="https://cdn.lordicon.com/cbtlerlm.json"
+          trigger="hover"
           size={16}
-          className='mt-1'
+          className="mt-1"
           colors={{
             primary: "#9ca3af",
             secondary: "",
@@ -176,10 +176,10 @@ export default function BookManagement({
       label: "Delete Book",
       icon: (
         <Lordicon
-          src='https://cdn.lordicon.com/jmkrnisz.json'
-          trigger='hover'
+          src="https://cdn.lordicon.com/jmkrnisz.json"
+          trigger="hover"
           size={16}
-          className='mt-1'
+          className="mt-1"
           colors={{
             primary: "#FF0000",
             secondary: "#FFFFFF",
@@ -235,10 +235,10 @@ export default function BookManagement({
     },
     {
       key: "book_pdf",
-      label: "PDF URL",
-      type: "url",
+      label: "Book PDF",
+      type: "pdf",
       required: false,
-      placeholder: "https://example.com/book.pdf",
+      placeholder: "Upload PDF file or enter URL",
       section: "details",
       gridCol: "full",
     },
@@ -355,18 +355,18 @@ export default function BookManagement({
   };
 
   return (
-    <div className='w-full mx-auto'>
-      <div className='w-full flex justify-between items-center mb-6'>
-        <h2 className='text-foreground text-xl font-semibold'>{title}</h2>
+    <div className="w-full mx-auto">
+      <div className="w-full flex justify-between items-center mb-6">
+        <h2 className="text-foreground text-xl font-semibold">{title}</h2>
         <Button
-          className='flex items-center gap-2 border-primary/30 rounded-md'
-          size='lg'
+          className="flex items-center gap-2 border-primary/30 rounded-md"
+          size="lg"
           onClick={() => setCreateModalOpen(true)}
         >
-          <span className='mt-1.5'>
+          <span className="mt-1.5">
             <Lordicon
-              src='https://cdn.lordicon.com/ueoydrft.json'
-              trigger='hover'
+              src="https://cdn.lordicon.com/ueoydrft.json"
+              trigger="hover"
               size={20}
               colors={{
                 primary: "",
@@ -388,7 +388,7 @@ export default function BookManagement({
         searchFilterConfig={searchFilterConfig}
         onDataChange={handleDataChange}
         loading={isLoading}
-        emptyMessage='No books found! Add new ones'
+        emptyMessage="No books found! Add new ones"
         itemsPerPage={itemsPerPage}
       />
 
@@ -397,12 +397,12 @@ export default function BookManagement({
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
         onSave={handleCreateBook}
-        title='Add New Book'
-        description='Add a new book to your collection'
+        title="Add New Book"
+        description="Add a new book to your collection"
         fields={createFormFields}
         sections={createModalSections}
-        saveButtonText='Add Book'
-        cancelButtonText='Cancel'
+        saveButtonText="Add Book"
+        cancelButtonText="Cancel"
         maxImageSizeInMB={5}
         maxImageUpload={1}
         acceptedImageFormats={[
@@ -422,13 +422,13 @@ export default function BookManagement({
             setEditingBook(null);
           }}
           onSave={handleUpdateBook}
-          title='Edit Book'
-          description='Update book information'
+          title="Edit Book"
+          description="Update book information"
           fields={createFormFields}
           sections={createModalSections}
           initialData={getEditInitialData()}
-          saveButtonText='Update Book'
-          cancelButtonText='Cancel'
+          saveButtonText="Update Book"
+          cancelButtonText="Cancel"
           maxImageUpload={1}
           maxImageSizeInMB={5}
           acceptedImageFormats={[

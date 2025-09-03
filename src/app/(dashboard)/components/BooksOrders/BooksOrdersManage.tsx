@@ -16,7 +16,6 @@ import Lordicon from "@/components/lordicon/lordicon-wrapper";
 import StatsCard from "@/components/common/StatsCard";
 import { orderMetrics } from "@/data/statsCardDataSets";
 import { useRouter } from "next/navigation";
-import { Check } from "lucide-react";
 
 interface BookOrderManagementProps {
   itemsPerPage?: number;
@@ -558,8 +557,8 @@ export default function BooksOrdersManage({
       label: "",
       icon: (
         <Lordicon
-          src='https://cdn.lordicon.com/knitbwfa.json'
-          trigger='hover'
+          src="https://cdn.lordicon.com/knitbwfa.json"
+          trigger="hover"
           size={20}
           colors={{
             primary: "#9ca3af",
@@ -578,7 +577,18 @@ export default function BooksOrdersManage({
     {
       key: "permission",
       label: "",
-      icon: <Check className='w-4 h-4 text-green-600' />,
+      icon: (
+        <Lordicon
+          src="https://cdn.lordicon.com/hrtsficn.json"
+          trigger="hover"
+          size={20}
+          colors={{
+            primary: "#008000",
+            secondary: "#ffffff",
+          }}
+          stroke={2}
+        />
+      ),
       variant: "ghost",
       onClick: (item) => console.log("Edit order:", item.orderId),
     },
@@ -587,8 +597,8 @@ export default function BooksOrdersManage({
       label: "",
       icon: (
         <Lordicon
-          src='https://cdn.lordicon.com/jmkrnisz.json'
-          trigger='hover'
+          src="https://cdn.lordicon.com/jmkrnisz.json"
+          trigger="hover"
           size={20}
           colors={{
             primary: "#FF0000",
